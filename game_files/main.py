@@ -8,11 +8,14 @@ class Game():
         def __init__(self):
             pygame.init()
             pygame.display.set_caption('DN1010')
-            #screen
+
+            # Config
+
+            # Screen
             self.SCREEN_WIDTH,self.SCREEN_HEIGHT = 1600, 900
             self.screen = pygame.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT), pygame.RESIZABLE)
 
-            #game
+            # Game
             self.GAME_W,self.GAME_H = 480, 270
             self.game_canvas = pygame.Surface((self.GAME_W,self.GAME_H))
             self.running, self.playing = True, True
@@ -80,13 +83,15 @@ class Game():
                 if event.type == pygame.MOUSEBUTTONUP:
                     self.actions['click'] = False
 
+        # get position of mouse and transform it to game canvas coordinates
         def get_mouse_pos(self):
             mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos() 
             mouse_pos_x = (mouse_pos_x / self.SCREEN_WIDTH * self.GAME_W)
             mouse_pos_y = (mouse_pos_y / self.SCREEN_HEIGHT * self.GAME_H)
             return (mouse_pos_x, mouse_pos_y)
 
-        # some important functions
+        # Some important functions
+
         def update(self):
             self.state_stack[-1].update(self.dt,self.actions)
 
@@ -96,26 +101,30 @@ class Game():
             self.screen.blit(pygame.transform.scale(self.game_canvas,(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)), (0,0))
             pygame.display.flip()
 
+        # Get delta time
         def get_dt(self):
             now = time.time()
             self.dt = now - self.prev_time
             self.prev_time = now
 
         def load_assets(self):
-            # Create pointers to directories 
+            # Create paths to asset directories. 
             self.assets_dir = os.path.join("game_assets")
             self.image_dir = os.path.join(self.assets_dir, "images")
             self.sprite_dir = os.path.join(self.assets_dir, "sprites")
             self.font_dir = os.path.join(self.assets_dir, "font")
 
+        # Some useful functions
+
         def draw_text(self, surface, text, color, x, y, font_size):
-            self.font= pygame.font.Font(os.path.join(self.font_dir, "PressStart2P-vaV7.ttf"), font_size) #TODO Update font file name here
+            # NOTE: Change font file name here:
+            self.font= pygame.font.Font(os.path.join(self.font_dir, "PressStart2P-vaV7.ttf"), font_size)
             text_surface = self.font.render(text, True, color)
-            #text_surface.set_colorkey((0,0,0))
             text_rect = text_surface.get_rect()
             text_rect.center = (x, y)
             surface.blit(text_surface, text_rect)
         
+        # NOTE: This function makes the developer's life easier but is not optimised. Change if the game lags. 
         def draw_image(self, surface, image_name, pos, size):
             image = pygame.image.load(os.path.join(self.image_dir, image_name))
             if size != 1:
@@ -130,9 +139,11 @@ class Game():
             return image_rect
 
         def load_states(self):
+            # load the title screen first.
             self.title_screen = Title(self)
             self.state_stack.append(self.title_screen)
 
+        # call at the end of game loop in each state to prevent funny input issues
         def reset_keys(self):
             for action in self.actions:
                 self.actions[action] = False
