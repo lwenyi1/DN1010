@@ -1,8 +1,9 @@
-# elements.py
-#
-# Contains: 
-# - the button class for title screen and pause screen to use
-# - the chat box class for the game_world to use
+"""elements.py, module with the miscellaneous elements the game needs
+
+ Contains: 
+ - the button class for title screen and pause screen to use
+ - the chat box class for the game_world to use
+"""
 
 class Button():
     def __init__(self, game, image_name, pos, size, text, font_size, normal_colour, hovering_colour):

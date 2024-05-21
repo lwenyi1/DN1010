@@ -1,10 +1,10 @@
+"""sub_states.py, module with the less complex states
 
-# sub_states.py
-#
-# Contains:
-# - the option page
-# - the pause menu
-# - the transition screen
+Contains:
+ - the option page
+ - the pause menu
+ - the transition screen
+"""
 # NOTE I dont actually know what options to put yet. To think about it at some point.
 
 from game.state import State
@@ -16,7 +16,7 @@ class Options(State):
         State.__init__(self, game)
         # buttons
         self.done_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W/2, self.game.GAME_H * 0.64),
-                                0.035, "DONE", 8, (255,255,255), (128,128,128))
+                                0.07, "DONE", 16, (255,255,255), (128,128,128))
 
     def update(self, delta_time, actions): 
         if actions['esc']:
@@ -28,8 +28,8 @@ class Options(State):
         self.game.reset_keys()
     
     def render(self, display):
-        self.game.draw_image(display, "pause_screen_box.png", (240,135), 0.15)
-        self.game.draw_text(display, "OPTIONS", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.32, 12)
+        self.game.draw_image(display, "pause_screen_box.png", (self.game.GAME_W/2, self.game.GAME_H/2), 0.3)
+        self.game.draw_text(display, "OPTIONS", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.32, 24)
         # draw buttons
         self.done_button.print()
         self.done_button.change_colour()
@@ -40,13 +40,13 @@ class Pause_champ(State):
         State.__init__(self, game)
         # buttons
         self.save_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W/2, self.game.GAME_H * 0.40),
-                                0.035, "SAVE", 8, (255,255,255), (128,128,128))
+                                0.07, "SAVE", 16, (255,255,255), (128,128,128))
         self.resume_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W/2, self.game.GAME_H * 0.48),
-                                0.035, "RESUME", 8, (255,255,255), (128,128,128))
+                                0.07, "RESUME", 16, (255,255,255), (128,128,128))
         self.options_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W/2, self.game.GAME_H * 0.56),
-                                0.035, "OPTIONS", 8, (255,255,255), (128,128,128))
+                                0.07, "OPTIONS", 16, (255,255,255), (128,128,128))
         self.home_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W/2, self.game.GAME_H * 0.64),
-                                0.035, "HOME", 8, (255,255,255), (128,128,128))
+                                0.07, "HOME", 16, (255,255,255), (128,128,128))
 
     def update(self, delta_time, actions): 
         if actions['esc']:
@@ -67,8 +67,8 @@ class Pause_champ(State):
         self.game.reset_keys()
 
     def render(self, display):
-        self.game.draw_image(display, "pause_screen_box.png", (240,135), 0.15)
-        self.game.draw_text(display, "GAME PAUSED", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.32, 12)
+        self.game.draw_image(display, "pause_screen_box.png", (self.game.GAME_W/2, self.game.GAME_H/2), 0.3)
+        self.game.draw_text(display, "GAME PAUSED", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.32, 24)
         # draw buttons
         self.save_button.print()
         self.save_button.change_colour()

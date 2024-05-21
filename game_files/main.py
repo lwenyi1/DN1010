@@ -1,3 +1,8 @@
+""" main.py, the main game program that calls every other module.
+
+Contains the game class.
+"""
+
 import pygame, os, time
 from pygame.locals import *
 
@@ -16,7 +21,7 @@ class Game():
             self.screen = pygame.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT), pygame.RESIZABLE)
 
             # Game
-            self.GAME_W,self.GAME_H = 480, 270
+            self.GAME_W,self.GAME_H = 960, 540
             self.game_canvas = pygame.Surface((self.GAME_W,self.GAME_H))
             self.running, self.playing = True, True
             self.actions = {"left": False, "right": False, "up" : False, "down" : False, "action1" : False, 
@@ -35,7 +40,7 @@ class Game():
 
         def get_events(self):
             for event in pygame.event.get():
-                # window events
+                # Window events
                 if event.type == pygame.QUIT:
                     self.playing = False
                     self.running = False
@@ -43,11 +48,12 @@ class Game():
                     self.SCREEN_WIDTH, self.SCREEN_HEIGHT = event.w, event.h
                     self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pygame.RESIZABLE)
                 
-                # controls
-                # keyboard
+                # Controls
+                # Keyboard
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE: 
                         self.actions['esc'] = True
+                        time.sleep(0.2) # prevents debouncing issues when using esc in the game state
                     if event.key == pygame.K_a:
                         self.actions['left'] = True
                     if event.key == pygame.K_d:
@@ -77,14 +83,14 @@ class Game():
                     if event.key == pygame.K_f:
                         self.actions['action2'] = False
                 
-                # mouse
+                # Mouse
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.actions['click'] = True
                 if event.type == pygame.MOUSEBUTTONUP:
                     self.actions['click'] = False
 
-        # get position of mouse and transform it to game canvas coordinates
         def get_mouse_pos(self):
+            """Get position of mouse and transform it to game canvas coordinates"""
             mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos() 
             mouse_pos_x = (mouse_pos_x / self.SCREEN_WIDTH * self.GAME_W)
             mouse_pos_y = (mouse_pos_y / self.SCREEN_HEIGHT * self.GAME_H)
@@ -96,19 +102,19 @@ class Game():
             self.state_stack[-1].update(self.dt,self.actions)
 
         def render(self):
+            """Render current state to the screen"""
             self.state_stack[-1].render(self.game_canvas)
-            # Render current state to the screen
             self.screen.blit(pygame.transform.scale(self.game_canvas,(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)), (0,0))
             pygame.display.flip()
 
-        # Get delta time
         def get_dt(self):
+            """Get delta time"""
             now = time.time()
             self.dt = now - self.prev_time
             self.prev_time = now
 
         def load_assets(self):
-            # Create paths to asset directories. 
+            """Create paths to asset directories."""
             self.assets_dir = os.path.join("game_assets")
             self.image_dir = os.path.join(self.assets_dir, "images")
             self.sprite_dir = os.path.join(self.assets_dir, "sprites")
@@ -117,6 +123,7 @@ class Game():
         # Some useful functions
 
         def draw_text(self, surface, text, color, x, y, font_size):
+            """Draws given text string to the screen."""
             # NOTE: Change font file name here:
             self.font= pygame.font.Font(os.path.join(self.font_dir, "PressStart2P-vaV7.ttf"), font_size)
             text_surface = self.font.render(text, True, color)
@@ -124,8 +131,9 @@ class Game():
             text_rect.center = (x, y)
             surface.blit(text_surface, text_rect)
         
-        # NOTE: This function makes the developer's life easier but is not optimised. Change if the game lags. 
         def draw_image(self, surface, image_name, pos, size):
+            """Draws given image file to the screen."""
+            # NOTE: This function makes the developer's life easier but is not optimised. Change if the game lags. 
             image = pygame.image.load(os.path.join(self.image_dir, image_name))
             if size != 1:
                 og_width, og_height = image.get_size()
@@ -138,13 +146,16 @@ class Game():
             surface.blit(resized_image, image_rect)
             return image_rect
 
+        
         def load_states(self):
+            """load game states"""
             # load the title screen first.
             self.title_screen = Title(self)
             self.state_stack.append(self.title_screen)
 
-        # call at the end of game loop in each state to prevent funny input issues
         def reset_keys(self):
+            """Reset status of keys back to false (unpressed)"""
+            # call at the end of game loop in each state to prevent funny input issues
             for action in self.actions:
                 self.actions[action] = False
 

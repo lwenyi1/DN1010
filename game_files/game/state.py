@@ -1,6 +1,8 @@
-# state.py
-#
-# Contains parent state class for other states to inherit from
+"""state.py, parent class for other states to inherit from
+
+Contains:
+ - parent state class
+"""
 
 class State():
     def __init__(self, game):
