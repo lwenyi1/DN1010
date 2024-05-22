@@ -13,6 +13,7 @@ from game.game_world import Game_World
 from game.sub_states import Options
 
 class Title(State):
+    """A class used to manage the title screen of the game."""
     def __init__(self, game):
         State.__init__(self, game)
         # initialise buttons

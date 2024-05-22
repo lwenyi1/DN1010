@@ -6,6 +6,18 @@
 """
 
 class Button():
+    """A class used to represent a simple button with text inside and an image background.
+
+    Methods
+    -------
+    print(self)
+        Draws the button to the screen.
+    is_clicked(self)
+        Checks if the button has been clicked. Returns True if so.
+    change_colour(self)
+        Checks if the mouse is hovering over the button and updates
+        the colour and size of the button for visual effect if so.
+    """
     def __init__(self, game, image_name, pos, size, text, font_size, normal_colour, hovering_colour):
         self.game = game
         self.image_name = image_name

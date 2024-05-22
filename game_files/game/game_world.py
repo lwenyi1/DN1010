@@ -12,6 +12,8 @@ from game.sprites import *
 from random import randint # NOTE for testing
 
 class Game_World(State):
+    """A class used to manage the actual game world state for the game, i.e. the one
+    the player plays in."""
     def __init__(self, game):
         State.__init__(self, game)
         self.play_transition = True

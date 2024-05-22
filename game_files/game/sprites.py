@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('game_assets/sprites/test_player.png').convert_alpha()
         self.rect = self.image.get_rect(center = pos)
         self.direction = pygame.math.Vector2()
-        self.speed = 5
+        self.speed = 2
     
     def update(self, actions):
         if actions['up']:

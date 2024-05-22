@@ -5,6 +5,20 @@ Contains:
 """
 
 class State():
+    """A class representing a game state.
+    
+    Methods
+    -------
+    update(self)
+        Updates the game based on player inputs. To be defined by child classes.
+    render(self)
+        Renders the screen based on the game state. To be defined by child classes.
+    enter_state(self)
+        Add the state to the state_stack in the main game loop.
+    exit_state(self)
+        Pop the state from the state_stack in the main game loop.
+    """
+
     def __init__(self, game):
         self.game = game
         self.prev_state = None

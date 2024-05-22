@@ -12,6 +12,7 @@ from game.elements import Button
 
 # Options page for the game, does not lead to other states
 class Options(State):
+    """A class used to manage the options page of the game"""
     def __init__(self, game):
         State.__init__(self, game)
         # buttons
@@ -36,6 +37,7 @@ class Options(State):
 
 # Pause menu, can go to options state
 class Pause_champ(State):
+    """A class used to magage the pause menu of the game"""
     def __init__(self, game):
         State.__init__(self, game)
         # buttons
@@ -80,6 +82,7 @@ class Pause_champ(State):
         self.home_button.change_colour()
 
 class Transition(State):
+    """A class used for temporary transitions screens in the game"""
     def __init__(self, game):
         State.__init__(self, game)
         self.time_passed = 0
