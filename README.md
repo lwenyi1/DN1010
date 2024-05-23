@@ -9,15 +9,6 @@ The production of a game titled CS1010 Coding Adventures which teaches basic pro
 
 CS1010 Coding Adventures is a 2D, 8-bit style game inspired by old RPGs such as the earlier Pokemon games. The game is designed to teach players basic programming concepts such as conditional statements and loops, implemented in the C programming language. It consists of a 2D map with several locations for players to explore, with each location teaching a specific programming concept. The game has two main types of Non-playable Characters (NPCs), the first type who will share programming knowledge with players and teach them the respective C syntax and another type who tests the player's newfound knowledge by giving them tasks to complete. These tasks are practices which use different methods to get the players to apply programming knowledge, based off methods used in some popular basic programming methodology modules.
 
-## Ideation (Milestone 1)
-### Problem motivation
-
-### Proposed core features
-
-### Design and plan
-
-<!--To add Prototyping and Extension for milestones 2 and 3 -->
-
 ## Trying out the game
 ### Required software
 To test out the game, the following software should be installed on the device used:
