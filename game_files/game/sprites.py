@@ -9,36 +9,17 @@ Contains:
 """
 import pygame
 
-# Start of NOTE: The following classes are for testing purposes only
+# Start of NOTE: The following classes are for testing and interation purposes only,
+#                they will not be in the final game
 
 class Tree(pygame.sprite.Sprite):
+    """Class used to generate trees on the map in the milestone 1 TPOC"""
     def __init__(self, pos, group):
         super().__init__(group)
         self.image = pygame.image.load('game_assets/sprites/test_tree.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
 
-class Player(pygame.sprite.Sprite):
-    def __init__(self,pos,group):
-        super().__init__(group)
-        self.image = pygame.image.load('game_assets/sprites/test_player.png').convert_alpha()
-        self.rect = self.image.get_rect(center = pos)
-        self.direction = pygame.math.Vector2()
-        self.speed = 2
-    
-    def update(self, actions):
-        if actions['up']:
-            self.direction.y = -1
-        elif actions['down']:
-            self.direction.y = 1
-        else:
-            self.direction.y = 0
-        if actions['left']:
-            self.direction.x = -1
-        elif actions['right']:
-            self.direction.x = 1
-        else:
-            self.direction.x = 0
-        self.rect.center += self.direction * self.speed
+
 # End of NOTE
 
 class All_sprites(pygame.sprite.Group):
@@ -71,13 +52,35 @@ class All_sprites(pygame.sprite.Group):
 
         # End of NOTE
 
-
-#TODO add in the character class
-#class Character():
-# should have a method to draw the characters at their coordinates, a method to move them and a method to talk (draw chatbox)
-
-#TODO add in the player class
-#class Player()
+#TODO update the player sprite to use a sprite sheet and add in animation
+class Player(pygame.sprite.Sprite):
+    def __init__(self, game, pos, group):
+        super().__init__(group)
+        self.image = pygame.image.load('game_assets/sprites/test_player.png').convert_alpha()
+        self.rect = self.image.get_rect(center = pos)
+        self.direction = pygame.math.Vector2()
+        self.speed = game.speed * 3
+    
+    def update(self, actions):
+        if actions['up']:
+            self.direction.y = -1
+        elif actions['down']:
+            self.direction.y = 1
+        else:
+            self.direction.y = 0
+        if actions['left']:
+            self.direction.x = -1
+        elif actions['right']:
+            self.direction.x = 1
+        else:
+            self.direction.x = 0
+        self.rect.center += self.direction * self.speed
 
 #TODO add in the NPC class
-#class NPC()
+'''
+class Hint_NPC(pygame.sprite.Sprite):
+    def __init__(self,pos, group):
+        super().__init__(group):
+
+class Task_NPC(pygame.sprite.Sprite):
+'''

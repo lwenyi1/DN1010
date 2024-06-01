@@ -32,6 +32,8 @@ class Game():
         The delta time between game cycles.
     prev_time: float
         Used along with time.time to find dt.
+    speed: int
+        Used as a multiplier for the entire game's speed.
     state_stack: list
         A list used as the stack containing the different game states.
     
@@ -55,7 +57,10 @@ class Game():
         Calculates the delta time and returns it.
     draw_text(self, surface as pygame.surface, colour as RGB tuple or hex, x coords, y coords, 
             font size)
-        Prints text to the screen with the desired parameters.
+        Prints text to the screen with the desired parameters, coords define centre of text.
+    draw_chat_text(self, surface as pygame.surface, colour as RGB tuple or hex, x coords, y coords, 
+            font size)
+        Prints text to the screen with the desired parameters, coords define top left of text.
     draw_image(self, surface as pygame.surface, image file name as str, pos as (x,y) tuple,
             size as float (multiplied to original image size))
         Prints image to the screen with the desired parameters. Returns the image rect.
@@ -82,6 +87,9 @@ class Game():
         self.actions = {"left": False, "right": False, "up" : False, "down" : False, "action1" : False, 
                         "action2" : False, "click": False, "esc": False }
         self.dt, self.prev_time = 0, 0 # self.dt is the time between cycles
+        self.speed = 1 # change this to multiply the overall game speed
+        
+        # Game management
         self.state_stack = []
         self.load_assets()
         self.load_states()
@@ -178,12 +186,27 @@ class Game():
     # Some useful functions
 
     def draw_text(self, surface, text, color, x, y, font_size):
-        """Draws given text string to the screen."""
+        """
+        Draws given text string to the screen, position define center of text.
+        Better for buttons. 
+        """
         # NOTE: Change font file name here:
         self.font= pygame.font.Font(os.path.join(self.font_dir, "PressStart2P-vaV7.ttf"), font_size)
         text_surface = self.font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
+        surface.blit(text_surface, text_rect)
+
+    def draw_chat_text(self, surface, text, color, x, y, font_size):
+        """
+        Draws given text string to the screen, position define top left of text.
+        Better for things like dialogue or any text animations from left to right.
+        """
+        # NOTE: Change font file name here:
+        self.font= pygame.font.Font(os.path.join(self.font_dir, "PressStart2P-vaV7.ttf"), font_size)
+        text_surface = self.font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.topleft = (x, y)
         surface.blit(text_surface, text_rect)
     
     def draw_image(self, surface, image_name, pos, size):

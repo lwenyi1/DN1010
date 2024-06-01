@@ -53,4 +53,58 @@ class Button():
             self.use_font_size = self.normal_font_size
 
 #TODO add in the chat box class
-#class Chatbox():
+class Chatbox():
+    """A class used to create dialog boxes to communicate to the player
+    
+    Each box can fit 4 lines and each line can fit 43 characters.
+    This gives a total of 172 characters in one box.
+    
+    There is no newline character so to print a new line just leave white spaces
+    until the current line reaches 43 characters lmaooo
+    """
+    def __init__(self, game, text):
+        self.game = game
+        self.text = text
+        self.text_len = len(text)
+        self.delay = int(6 / game.speed)
+        self.counter = 0
+        self.done = False # Boolean to check if the message is done printing
+        
+        # Position variables. Done at initiation to reduce repetitive calculations in rendering.
+        self.line_x_pos = game.GAME_W * 0.05
+        self.line_y_pos_1 = game.GAME_H * 0.71
+        self.line_y_pos_2 = game.GAME_H * 0.76
+        self.line_y_pos_3 = game.GAME_H * 0.81
+        self.line_y_pos_4 = game.GAME_H * 0.86
+    
+    def print(self):
+        self.game.draw_image(self.game.game_canvas, "chatbox.png", (self.game.GAME_W / 2, self.game.GAME_H / 2), 1)
+        if self.counter < self.delay * self.text_len:
+            self.counter += 1
+        else:
+            self.done = True
+
+        if self.counter//self.delay <= 43: # Draw one line
+            self.game.draw_chat_text(self.game.game_canvas, self.text[0:self.counter//self.delay],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_1, 20)
+        elif self.counter//self.delay <= 86: # Draw two lines
+            self.game.draw_chat_text(self.game.game_canvas, self.text[0:43],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_1, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[43:self.counter//self.delay],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_2, 20)
+        elif self.counter//self.delay <= 129: # Draw three lines
+            self.game.draw_chat_text(self.game.game_canvas, self.text[0:43],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_1, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[43:86],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_2, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[86:self.counter//self.delay],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_3, 20)
+        elif self.counter//self.delay <= 172: # Draw four lines
+            self.game.draw_chat_text(self.game.game_canvas, self.text[0:43],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_1, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[43:86],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_2, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[86:129],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_3, 20)
+            self.game.draw_chat_text(self.game.game_canvas, self.text[129:self.counter//self.delay],
+                                     (0,0,0), self.line_x_pos, self.line_y_pos_4, 20)

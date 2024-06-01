@@ -9,6 +9,7 @@ Links to:
 from game.state import State
 from game.sub_states import Pause_champ, Transition
 from game.sprites import *
+from game.elements import *
 from random import randint # NOTE for testing
 
 class Game_World(State):
@@ -21,11 +22,14 @@ class Game_World(State):
 
         # NOTE: for testing
         self.all_sprites = All_sprites(game)
-        self.player = Player((640, 360), self.all_sprites)
+        self.player = Player(game, (640,360), self.all_sprites)
         for i in range(20):
             random_x = randint(1000,2000)
             random_y = randint(1000,2000)
             Tree((random_x, random_y), self.all_sprites)
+        
+        self.chatbox = Chatbox(game, 
+                               "123451234512345123451234512345123451234512F123451234512345123451234512345123451234512U123451234512345123451234512345123451234512C123451234512345123451234512345123451234512K")
 
     def update(self, delta_time, actions): 
         if self.play_transition:
@@ -45,6 +49,7 @@ class Game_World(State):
         #self.game.draw_text(display, "GAME STATE", (0,0,0), self.game.GAME_W/2, self.game.GAME_H/2, 30)
 
         self.all_sprites.draw(self.player, display)
+        self.chatbox.print()
 
     def import_map():
         pass
