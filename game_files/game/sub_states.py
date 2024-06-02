@@ -83,15 +83,17 @@ class Pause_champ(State):
 
 class Transition(State):
     """A class used for temporary transitions screens in the game"""
-    def __init__(self, game):
+    def __init__(self, game, text):
         State.__init__(self, game)
         self.time_passed = 0
+        self.delay_time = 0.7
+        self.text = text
     
     def update(self, delta_time, actions):
         self.time_passed += delta_time
-        if self.time_passed > 1:
+        if self.time_passed > self.delay_time:
             self.exit_state()
     
     def render(self, display):
         display.fill((0,0,0))
-        self.game.draw_text(display, "THIS IS A TRANSITION", (255,255,255), self.game.GAME_W/2, self.game.GAME_H/2, 20)
+        self.game.draw_text(display, self.text, (255,255,255), self.game.GAME_W/2, self.game.GAME_H/2, 20)
