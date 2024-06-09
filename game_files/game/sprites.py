@@ -144,6 +144,10 @@ class Hint_NPC(pygame.sprite.Sprite):
 class Task_NPC(pygame.sprite.Sprite):
     """Class for all 'Task' NPCs
 
+    When creating an instance of a task NPC, remember to define its task_state after initialisation, e.g.
+    test_task_NPC = Test_Task_NPC(...)
+    test_task_NPC.task_state = Test_Task_state(game, self.text_pointer)
+
     Attributes
     ----------
     group:
@@ -158,18 +162,20 @@ class Task_NPC(pygame.sprite.Sprite):
         The text to show when the player successfully finishes the task.
     wrong_texts:
         The text to show when the player fails the task.
+    
+    task_state:
+        Instance of the task object for this NPC.
     self.image:
         The image of the sprite. Should be stored in the path game_assets/sprites and following the naming
         convention of <NPC name>.png.
     self.radius:
         The radius in which the player can stand in for them to be considered in range.
-    self.show_start_chat:
-        Keep track of whether the initial chat box has been shown and whether it should be shown.  
-        0 for not shown, do not show. 1 for show. 2 for shown, do not show. 3 for shown, do not show, do not activate task.
-    self.show_correct_chat:
-        As per self.show_start_chat.
-    self.show_wrong_caht:
-        As per self.show_start_chat.
+    self.show_chat:
+        Keep track of whether the chat box has been shown and whether it should be shown.  
+        0 for not shown, do not show. 1 for show. 2 for shown, do not show.
+    self.update_chat:
+        Bool to check when it is time to update the dialog based on task completion.
+        Set to true when the task state is added to the stack.
     
     Methods
     -------
@@ -181,7 +187,9 @@ class Task_NPC(pygame.sprite.Sprite):
         Displays the chat box for the NPC.
     
     """
-    def __init__(self, game, group, name, pos, start_texts, correct_texts, wrong_texts, task_state):
+    task_state = None
+    
+    def __init__(self, game, group, name, pos, start_texts, correct_texts, wrong_texts):
         super().__init__(group)
         self.image = pygame.image.load(f'game_assets/sprites/{name}.png').convert_alpha() # TODO: change this line if upgrading to using spritesheets
         self.rect = self.image.get_rect(center = pos)
@@ -189,12 +197,13 @@ class Task_NPC(pygame.sprite.Sprite):
         self.name = name
 
         self.texts = (start_texts, correct_texts, wrong_texts)
-        self.text_pointer = 0
+        self.text_pointer = [0] 
+        # The above can also be used to check if the task has been successfully completed (i.e. when it contains 1)
 
-        self.chat_box = Chatbox(game, name, self.texts[self.text_pointer])
+        self.chat_box = Chatbox(game, name, self.texts[self.text_pointer[0]])
         self.show_chat = [0]
+        self.update_chat = False # Flag used to check when it is time to update the dialog
 
-        self.task_state = task_state
         self.radius = 20
     
     def player_in_range(self, player_pos):
@@ -209,20 +218,27 @@ class Task_NPC(pygame.sprite.Sprite):
         """Updates the NPC when the sprite group update is called."""
         if actions['action1'] and self.player_in_range(player_pos):
             self.show_chat[0] = 1
-        if actions['action2'] and self.player_in_range(player_pos) and self.text_pointer == 0 and self.show_chat[0] == 2: 
-            self.task_state.enter_state() # TODO: FIX THIS!!!!!!!!!!!!!!!!!
-            # TODO: BUT WHY DOES THIS LINE BELOW RUN BEFORE THE LINE ON TOP?
-            self.text_pointer = self.task_state.result_update() # TODO: WHY DOESN'T THIS WORK??????????
-            print(self.text_pointer)
-            self.chat_box = Chatbox(self.game, self.name, self.texts[self.text_pointer])
-            self.show_chat[0] = 1
+        if actions['action2'] and self.player_in_range(player_pos) and self.text_pointer[0] == 0 and self.show_chat[0] == 2: 
+            self.task_state.enter_state() 
+            self.chat_box.counter = 0
+            self.update_chat = True
+            #self.show_chat[0] = 1
+
         if not self.player_in_range(player_pos):
-            if self.text_pointer == 2:
-                self.text_pointer = 0
-                self.chat_box = Chatbox(self.game, self.name, self.texts[self.text_pointer])
+            if self.text_pointer[0] == 2:
+                self.text_pointer[0] = 0
+                self.chat_box.texts = self.texts[self.text_pointer[0]]
+                self.chat_box.chat_reset()
                 self.show_chat[0] = 0
             else:
                 self.show_chat[0] = 0
+                self.chat_box.chat_reset()
+        if self.player_in_range(player_pos) and self.update_chat and (not self.text_pointer[0] == 0): # TODO fix the show yes or no at end thing
+            self.chat_box.texts = self.texts[self.text_pointer[0]]
+            if self.chat_box.counter == 0:
+                self.chat_box.chat_reset()
+            self.show_chat[0] = 1
+            self.update_chat = False
 
         if self.show_chat[0] == 1:
             self.chat_box.update(actions, self.show_chat) # This will change show_start_chat[0] to 2 once done.

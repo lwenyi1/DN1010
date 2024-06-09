@@ -77,7 +77,7 @@ class Game():
         # Config
 
         # Screen
-        self.SCREEN_WIDTH,self.SCREEN_HEIGHT = 1600, 900
+        self.SCREEN_WIDTH,self.SCREEN_HEIGHT = 960, 540 # Can be adjusted by dragging window
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT), pygame.RESIZABLE)
 
         # Game

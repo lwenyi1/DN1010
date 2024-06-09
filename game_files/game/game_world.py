@@ -26,9 +26,11 @@ class Game_World(State):
         # TODO: When working on levels, all these lesser being instances should be shoved into its level class.
         self.test_hint_NPC_texts = ("Hi there. I am a test hint NPC.", "I give no hints, except...", "Vim is the best text editor.")
         self.test_hint_NPC = Hint_NPC(game, self.all_sprites, "test_hint_NPC", (600,350), self.test_hint_NPC_texts)
-        test_task_state = Test_Task_State(game)
         self.test_task_NPC_texts = ("Hi there. I am a test task NPC.", "I just need one thing from you...", "Are the developers handsome?")
-        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test_task_NPC", (800,350), self.test_task_NPC_texts, "Yes", "No", test_task_state)
+        self.test_hint_NPC_correct = ("Yes it's true!", "They are quite good looking!")
+        self.test_hint_NPC_wrong = ("Hmm you seem to be wrong...", "Walk away and come back to try again...")
+        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test_task_NPC", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
+        self.test_task_NPC.task_state = Test_Task_State(game, self.test_task_NPC.text_pointer)
 
         # Start of NOTE: for testing
         for i in range(20):

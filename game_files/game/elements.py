@@ -106,6 +106,7 @@ class Chatbox():
         self.text = self.texts[self.active_text] # Update text to be shown.
         self.text_len = len(self.text) # Update length of text.
         self.counter = 0 # Reset counter.
+        self.done = False
 
     def update(self, actions, show_chat):
         if actions['action2'] and self.done:
