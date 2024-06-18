@@ -2,6 +2,7 @@
 
 Contains:
  - Game_world class
+ - Level classes
 Links to:
  - pause state
 """
@@ -17,9 +18,39 @@ class Game_World(State):
     the player plays in."""
     def __init__(self, game):
         State.__init__(self, game)
-        self.play_transition = True
-        self.levels = {} # TODO: Fill when working on levels
 
+        # Level management:
+        self.levels = {"test": Test_Level(game)} 
+        self.current_level = self.levels['test']
+
+    def update(self, delta_time, actions): 
+        if actions['esc']:
+            new_state = Pause_champ(self.game)
+            new_state.enter_state()
+        self.current_level.update(delta_time, actions)
+    
+    def render(self, display):
+        self.current_level.render(display)
+
+"""Level classes:"""
+
+class Test_Level():
+    """A class used to create an instance of the test level.
+
+    Location: Test map
+    Programming concepts: Nil
+    Hint NPCs: test_hint_NPC
+    Task NPC: test_task_NPC
+
+    ### NOTE:
+    Uses temporary map, player and NPC designs. Used for milestone 1 to show proof of concept.
+
+    At the time this class was made, there the map and characters etc were all imported from image files. 
+    This level may not work once the sprite logic etc is changed to handle tmx files and maybe spritesheets.
+    """
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
         self.all_sprites = All_sprites(game)
         self.player = Player(game, (900,500), self.all_sprites)
 
@@ -43,25 +74,17 @@ class Game_World(State):
                                ("Welcome to Catopia.","Use W, A, S and D to move around.","Press E while standing near NPCs to talk tothem."))
         # End of NOTE.
 
-    def update(self, delta_time, actions): 
+    def update(self, delta_time, actions):
         if self.play_transition:
             trans_state = Transition(self.game, "Entering Catopia...")
             trans_state.enter_state()
             self.play_transition = False
-        if actions['esc']:
-            new_state = Pause_champ(self.game)
-            new_state.enter_state()
-        
+
         self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
         self.player.update_player(actions) # player has its own update function.
         self.welcome_chatbox.update(actions, self.show_chat)
-
-        #self.game.reset_keys()
     
     def render(self, display):
-        #display.fill((255,255,255))
-        #self.game.draw_text(display, "GAME STATE", (0,0,0), self.game.GAME_W/2, self.game.GAME_H/2, 30)
-
         self.all_sprites.draw(self.player, display)
         self.test_hint_NPC.chatters()
         self.test_task_NPC.chatters()

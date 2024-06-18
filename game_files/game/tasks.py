@@ -75,6 +75,8 @@ class Task_State(State):
         display.fill((255,255,255))
         self.task_render(display)
 
+"""Test level tasks:"""
+
 class Test_Task_State(Task_State):
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
