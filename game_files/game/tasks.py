@@ -2,7 +2,11 @@
 
 Contains:
  - parent task class
+<<<<<<< Updated upstream
  - test task class
+=======
+ - Level 0:
+>>>>>>> Stashed changes
  - Level 1:
  - Level 2:
  - Level 3:
@@ -10,7 +14,11 @@ Contains:
  - Level 5:
  - Level 6:
  - Level 7:
+<<<<<<< Updated upstream
  - Level 8:
+=======
+ - test task class
+>>>>>>> Stashed changes
 """
 from game.state import State
 from game.sub_states import *
@@ -72,16 +80,16 @@ class Task_State(State):
 
     def render(self, display):
         # TODO: Replace these once the actual design for the task state is complete
-        display.fill((255,255,255))
+        display.fill((0,0,0))
         self.task_render(display)
 
 class Test_Task_State(Task_State):
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
         self.yes_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W * 0.4, self.game.GAME_H/2),
-                                0.07, "YES", 20, (0,0,0), (128,128,128))
+                                0.07, "YES", 20, (255,255,255), (128,128,128))
         self.no_button = Button(self.game, "title_screen_button.png", (self.game.GAME_W * 0.6, self.game.GAME_H/2),
-                                0.07, "NO", 20, (0,0,0), (128,128,128))
+                                0.07, "NO", 20, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
         if actions["click"]:
@@ -95,7 +103,7 @@ class Test_Task_State(Task_State):
             self.play_transition = True
 
     def task_render(self, display):
-        self.game.draw_text(display, "Are the developers handsome?", (0,0,0), self.game.GAME_W/2, self.game.GAME_H * 0.3, 30)
+        self.game.draw_text(display, "Are the developers handsome?", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.3, 30)
 
         self.yes_button.print()
         self.yes_button.change_colour()

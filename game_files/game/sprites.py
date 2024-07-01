@@ -54,11 +54,11 @@ class All_sprites(pygame.sprite.Group):
 
         # End of NOTE
 
-#TODO update the player sprite to use a sprite sheet and add in animation
+#TODO Maybe update the player sprite to use a sprite sheet and add in animation
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, pos, group):
         super().__init__(group)
-        self.image = pygame.image.load('game_assets/sprites/test_player.png').convert_alpha()
+        self.image = pygame.image.load('game_assets/sprites/player.png').convert_alpha()
         self.rect = self.image.get_rect(center = pos)
         self.direction = pygame.math.Vector2()
         self.speed = game.speed * 3

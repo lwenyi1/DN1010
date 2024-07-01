@@ -17,9 +17,534 @@ class Game_World(State):
     the player plays in."""
     def __init__(self, game):
         State.__init__(self, game)
+<<<<<<< Updated upstream
+=======
+
+        # Level management:
+        """
+        self.level_num = 8 # Number which acts as the key to the level classes in the dictionary
+        self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
+                       "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
+                       "8": Test_Level(game)} 
+        self.current_level = self.levels[f"{self.level_num}"] # Change level_num into a string and use it as key for dict
+        """
+        self.current_level = Test_Level(game)
+
+    def next_level(self):
+        self.level_num += 1
+        self.current_level = self.levels[f"{self.level_num}"]
+
+    def update(self, delta_time, actions): 
+        if actions['esc']:
+            new_state = Pause_champ(self.game)
+            new_state.enter_state()
+        self.current_level.update(delta_time, actions)
+    
+    def render(self, display):
+        self.current_level.render(display)
+
+"""Level classes:"""
+
+class Level_0():
+    """A class used to create an instance of level 0.
+
+     Location: IO island
+     Programming concepts: Basics of C, IO, types in C
+     Hint NPCs: Professor Floofington, Dennis Scratchie, Brian Fur-nighan, Cat Thompson
+     Task NPCs: SoC freshman, Luke Manu, Desmon Chungus
+    """
+
+    def __init__(self, game):
+        self.game = game
+>>>>>>> Stashed changes
         self.play_transition = True
         self.levels = {} # TODO: Fill when working on levels
 
+<<<<<<< Updated upstream
+=======
+        # Welcome chat box
+        self.show_chat = [1]        
+        self.welcome_chatbox = Chatbox(game, "Developer No. 2",
+                               ("Welcome to Catopia.","Use W, A, S and D to move around.","Press E while standing near NPCs to talk tothem."))
+
+        # NPCs
+        self.prof_floof_texts = ("Greetings!", 
+                                 "Everyone here is cat themed because        Developer No. 1 likes cats.",
+                                 "Strange things are happening around here...",
+                                 "We need your help to fix them!", 
+                                 "Pick up all the knowledge you can from the Hint NPCs,",
+                                 "Then fix the problems posed by Task NPCs.",
+                                 "Good luck!")
+        self.prof_floof_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.prof_floof = Hint_NPC(game, self.all_sprites, "Prof. Floofington", "prof_floof", self.prof_floof_pos, self.prof_floof_texts)
+        
+        self.dennis_texts = ("C is a powerful programming language       developed by Dennis Ritchie in the 1970s.",
+                             "It is known for its efficiency and control over hardware and memory.",
+                             "It has different variable types that must  be defined such as int, char and float.",
+                             "The entry point of any C program is the    'int main()' function.",
+                             "Here's an example of a program in C:       int main() {                               printf(\"Hello\");                           }")
+        self.dennis_pos = (69, 69)
+        self.dennis = Hint_NPC(game, self.all_sprites, "Dennis Scratchie", "dennis", self.dennis_pos, self.dennis_texts)
+
+        self.brian_texts = ("Printing and scanning to the terminal can  be done using the printf() and scanf()     functions.",
+                            f"printf takes a format string and a variablenumber of arguments, with placeholders like'%d' for integers, '%f' for floats,        '%c' for chars and '%s' for strings",
+                            f"For example,                               int num = 5;                               printf(\"The number is %d\", num);           prints 'The number is 5'",
+                            f"scanf reads formatted input from standard  input using the same placeholders, it takesin a format string and pointers to the     variables where the data will be stored",
+                            f"For example,                               int num;                                   scanf(\"%d\", &num);                         reads in an integer and stores it in num")
+        self.brian_pos = (69, 69)
+        self.brian = Hint_NPC(game, self.all_sprites, "Brian Fur-nighan", "brian", self.brian_pos, self.brian_texts)
+
+        self.soc_freshman_texts = ("The words in my book disappeared", "It's like someone messed up the printf     statement!", )
+        self.soc_freshman_correct = ("Wow! Thanks for the help!", )
+        self.soc_freshman_wrong = ("Man! It still doesn't work...", )
+        self.soc_freshman_pos = (69, 69)
+        self.soc_freshman = Task_NPC(game, self.all_sprites, "SoC Freshman", "soc_freshman", self.soc_freshman_pos, self.soc_freshman_texts, self.soc_freshman_correct, self.soc_freshman_wrong)
+        self.soc_freshman.task_state = Freshman_Task(game, self.soc_freshman.text_pointer)
+
+        self.luke_texts = ("... .... .. .....", 
+                           "<The difficulty of the CS1010 PE has left   Lyuke unable to converse>",
+                           "<We need to reprogram his brain's input and output to fix him>")
+        self.luke_correct = ("I should have studied business instead.", )
+        self.luke_wrong = (". .... ......", "<He still cannot speak>")
+        self.luke_pos = (69, 69)
+        self.luke = Task_NPC(game, self.all_sprites, "Lyuke ManU", "luke", self.luke_pos, self.luke_texts, self.luke_correct, self.luke_wrong)
+        self.luke.task_state = Luke_Task(game, self.luke.text_pointer)
+
+        self.desmon_texts = ("I hate decimals, they're too complicated!", "Change them into integers for me!")
+        self.desmon_correct = ("That's right! For honour and glory!", )
+        self.desmon_wrong = ("Wrong... For tonner and lorry!", )
+        self.desmon_pos = (69, 69)
+        self.desmon = Task_NPC(game, self.all_sprites, "Desmon Chungus", "desmon", self.desmon_pos, self.desmon_texts, self.desmon_correct, self.desmon_wrong)
+        self.desmon.task_state = Desmon_Task(game, self.desmon.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering IO Island, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+        self.welcome_chatbox.update(actions, self.show_chat)
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+        if self.show_chat[0] == 1:
+            self.welcome_chatbox.print()
+
+class Level_1():
+    """A class used to create an instance of level 1.
+
+     Location: Arithmetic Acres
+     Programming concepts: Basic math operations
+     Hint NPCs: John Catmack
+     Task NPCs: MacOS Fanboy, Coffee Drinker, Disgruntled Student
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.john_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.john_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.john = Hint_NPC(game, self.all_sprites, "John Catmack", "john", self.john_pos, self.john_texts)
+        
+        self.macOS_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.macOS_correct = ("Wow! Thanks for the help!", )
+        self.macOS_wrong = ("Man! That can't be right...", )
+        self.macOS_pos = (69, 69)
+        self.macOS = Task_NPC(game, self.all_sprites, "MacOS Fanboy", "macOS", self.macOS_pos, self.macOS_texts, self.macOS_correct, self.macOS_wrong)
+        self.macOS.task_state = MacOS_Task(game, self.macOS.text_pointer)
+
+        self.coffee_texts = ("My coffee mug keeps refilling itself!", 
+                             "Not that I'm complaining but,",
+                             "Wonder how much free coffee I've gotten?")
+        self.coffee_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.coffee_wrong = ("Hmm I don't remember drinking that much...")
+        self.coffee_pos = (69, 69)
+        self.coffee = Task_NPC(game, self.all_sprites, "Coffee Drinker", "coffee", self.coffee_pos, self.coffee_texts, self.coffee_correct, self.coffee_wrong)
+        self.coffee.task_state = Coffee_Task(game, self.coffee.text_pointer)
+
+        self.student_texts = ("I have no idea how to solve quadratic      equations.")
+        self.student_correct = ("That makes sense!", )
+        self.student_wrong = ("I'm even more lost now...", )
+        self.student_pos = (69, 69)
+        self.student = Task_NPC(game, self.all_sprites, "Disgruntled Student", "student", self.student_pos, self.student_texts, self.student_correct, self.student_wrong)
+        self.student.task_state = Student_Task(game, self.student.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_2():
+    """A class used to create an instance of level 2.
+
+     Location: Logic Links
+     Programming concepts: Basic conditional operations
+     Hint NPCs: Markus Fursson
+     Task NPCs: Jamie, Windows User, Young Punk
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.mark_texts = (f"If-else statements in C let you to execute different blocks of code based on whether acondition is true or false",
+                           "The syntax involves using                  'if (condition) {<code>} else {code}'",
+                           "Conditional operators such as '==', '!=',  '<', '>', '<=' and '>=', meaning equal to, not equal to, less than, more than, less   than or equal to, more than or equal to",
+                           "can be used to form the conditions for the if else statement.")
+        self.mark_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.mark = Hint_NPC(game, self.all_sprites, "Markus Fursson", "mark", self.mark_pos, self.mark_texts)
+        
+        self.jamie_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.jamie_correct = ("Wow! Thanks for the help!", )
+        self.jamie_wrong = ("Man! That can't be right...", )
+        self.jamie_pos = (69, 69)
+        self.jamie = Task_NPC(game, self.all_sprites, "Jamie", "jamie", self.jamie_pos, self.jamie_texts, self.jamie_correct, self.jamie_wrong)
+        self.jamie.task_state = Jamie_Task(game, self.jamie.text_pointer)
+
+        self.windows_texts = ("My coffee mug keeps refilling itself!", 
+                             "Not that I'm complaining but,",
+                             "Wonder how much free coffee I've gotten?")
+        self.windows_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.windows_wrong = ("Hmm I don't remember drinking that much...")
+        self.windows_pos = (69, 69)
+        self.windows = Task_NPC(game, self.all_sprites, "Windows User", "windows", self.windows_pos, self.windows_texts, self.windows_correct, self.windows_wrong)
+        self.windows.task_state = Windows_Task(game, self.windows.text_pointer)
+
+        self.punk_texts = ("I have no idea how to solve quadratic      equations.")
+        self.punk_correct = ("That makes sense!", )
+        self.punk_wrong = ("I'm even more lost now...", )
+        self.punk_pos = (69, 69)
+        self.punk = Task_NPC(game, self.all_sprites, "Young Punk", "punk", self.punk_pos, self.punk_texts, self.punk_correct, self.punk_wrong)
+        self.punk.task_state = Punk_Task(game, self.punk.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Logic Links, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_3():
+    """A class used to create an instance of level 3.
+
+     Location: Loop Lake
+     Programming concepts: For and while loops, recursion
+     Hint NPCs: Cat Thompson, Alan Purring
+     Task NPCs: Bensen, Local Fisherman, Notepad User
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.thomp_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.thomp_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.thomp = Hint_NPC(game, self.all_sprites, "Cat Thompson", "thomp", self.thomp_pos, self.thomp_texts)
+        
+        self.bensen_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.bensen_correct = ("Wow! Thanks for the help!", )
+        self.bensen_wrong = ("Man! That can't be right...", )
+        self.bensen_pos = (69, 69)
+        self.bensen = Task_NPC(game, self.all_sprites, "Bensen", "bensen", self.bensen_pos, self.bensen_texts, self.bensen_correct, self.bensen_wrong)
+        self.bensen.task_state = Bensen_Task(game, self.bensen.text_pointer)
+
+        self.fisher_texts = ("My coffee mug keeps refilling itself!", 
+                             "Not that I'm complaining but,",
+                             "Wonder how much free coffee I've gotten?")
+        self.fisher_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.fisher_wrong = ("Hmm I don't remember drinking that much...")
+        self.fisher_pos = (69, 69)
+        self.fisher = Task_NPC(game, self.all_sprites, "Local Fisherman", "fisher", self.fisher_pos, self.fisher_texts, self.fisher_correct, self.fisher_wrong)
+        self.fisher.task_state = Fisher_Task(game, self.fisher.text_pointer)
+
+        self.alan_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.alan_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.alan = Hint_NPC(game, self.all_sprites, "Alan Purring", "alan", self.alan_pos, self.alan_texts)
+
+        self.notepad_texts = ("I have no idea how to solve quadratic      equations.")
+        self.notepad_correct = ("That makes sense!", )
+        self.notepad_wrong = ("I'm even more lost now...", )
+        self.notepad_pos = (69, 69)
+        self.notepad = Task_NPC(game, self.all_sprites, "Notepad User", "notepad", self.notepad_pos, self.notepad_texts, self.notepad_correct, self.notepad_wrong)
+        self.notepad.task_state = Notepad_Task(game, self.notepad.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_4():
+    """A class used to create an instance of level 4.
+
+     Location: Pointer Peaks
+     Programming concepts: Pointers
+     Hint NPCs: Linus Pawvalds
+     Task NPCs: Linux Enjoyer, Tian Duck, Most Sane CEG Student
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.linus_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.linus_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.linus = Hint_NPC(game, self.all_sprites, "Linus Pawvalds", "linus", self.linus_pos, self.linus_texts)
+        
+        self.linux_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.linux_correct = ("Wow! Thanks for the help!", )
+        self.linux_wrong = ("Man! That can't be right...", )
+        self.linux_pos = (69, 69)
+        self.linux = Task_NPC(game, self.all_sprites, "Linux Enjoyer", "linux", self.linux_pos, self.linux_texts, self.linux_correct, self.linux_wrong)
+        self.linux.task_state = Linux_Task(game, self.linux.text_pointer)
+
+        self.tian_texts = ("My coffee mug keeps refilling itself!", 
+                             "Not that I'm complaining but,",
+                             "Wonder how much free coffee I've gotten?")
+        self.tian_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.tian_wrong = ("Hmm I don't remember drinking that much...")
+        self.tian_pos = (69, 69)
+        self.tian = Task_NPC(game, self.all_sprites, "Tian Duck", "tian", self.tian_pos, self.tian_texts, self.tian_correct, self.tian_wrong)
+        self.tian.task_state = Tian_Task(game, self.tian.text_pointer)
+
+        self.sane_texts = ("I have no idea how to solve quadratic      equations.")
+        self.sane_correct = ("That makes sense!", )
+        self.sane_wrong = ("I'm even more lost now...", )
+        self.sane_pos = (69, 69)
+        self.sane = Task_NPC(game, self.all_sprites, "Most Sane CEG Student", "sane", self.sane_pos, self.sane_texts, self.sane_correct, self.sane_wrong)
+        self.sane.task_state = Sane_Task(game, self.sane.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_5():
+    """A class used to create an instance of level 5.
+
+     Location: Array Arena
+     Programming concepts: Static Arrays
+     Hint NPCs: Mark Zucatberg
+     Task NPCs: Json K, Local Rascal, Chad Ko
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.zuck_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.zuck_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.zuck = Hint_NPC(game, self.all_sprites, "Mark Zucatberg", "zuck", self.zuck_pos, self.zuck_texts)
+        
+        self.json_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.json_correct = ("Wow! Thanks for the help!", )
+        self.json_wrong = ("Man! That can't be right...", )
+        self.json_pos = (69, 69)
+        self.json = Task_NPC(game, self.all_sprites, "Json K", "json", self.json_pos, self.json_texts, self.json_correct, self.json_wrong)
+        self.json.task_state = Json_Task(game, self.json.text_pointer)
+
+        self.rascal_texts = ("My coffee mug keeps refilling itself!", 
+                             "Not that I'm complaining but,",
+                             "Wonder how much free coffee I've gotten?")
+        self.rascal_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.rascal_wrong = ("Hmm I don't remember drinking that much...")
+        self.rascal_pos = (69, 69)
+        self.rascal = Task_NPC(game, self.all_sprites, "Local Rascal", "rascal", self.rascal_pos, self.rascal_texts, self.rascal_correct, self.rascal_wrong)
+        self.rascal.task_state = Rascal_Task(game, self.rascal.text_pointer)
+
+        self.chad_texts = ("I have no idea how to solve quadratic      equations.")
+        self.chad_correct = ("That makes sense!", )
+        self.chad_wrong = ("I'm even more lost now...", )
+        self.chad_pos = (69, 69)
+        self.chad = Task_NPC(game, self.all_sprites, "Chad Ko", "chad", self.chad_pos, self.chad_texts, self.chad_correct, self.chad_wrong)
+        self.chad.task_state = Chad_Task(game, self.chad.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_6():
+    """A class used to create an instance of level 6.
+
+     Location: Memory Meadows
+     Programming concepts: Memory management
+     Hint NPCs: Terry Pawvis
+     Task NPCs: Microsoft Mike, Vim User, Robert
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.terry_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                             "These operators can be used with variables and constants.")
+        self.terry_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.terry = Hint_NPC(game, self.all_sprites, "Terry Pawvis", "terry", self.terry_pos, self.terry_texts)
+        
+        self.mike_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.mike_correct = ("Wow! Thanks for the help!", )
+        self.mike_wrong = ("Man! That can't be right...", )
+        self.mike_pos = (69, 69)
+        self.mike = Task_NPC(game, self.all_sprites, "Microsoft Mike", "mike", self.mike_pos, self.mike_texts, self.mike_correct, self.mike_wrong)
+        self.mike.task_state = Mike_Task(game, self.mike.text_pointer)
+
+        self.vim_texts = ("My coffee mug keeps refilling itself!", )
+        self.vim_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.vim_wrong = ("Hmm I don't remember drinking that much...")
+        self.vim_pos = (69, 69)
+        self.vim = Task_NPC(game, self.all_sprites, "Vim User", "vim", self.vim_pos, self.vim_texts, self.vim_correct, self.vim_wrong)
+        self.vim.task_state = Vim_Task(game, self.vim.text_pointer)
+
+        self.robert_texts = ("I have no idea how to solve quadratic      equations.")
+        self.robert_correct = ("That makes sense!", )
+        self.robert_wrong = ("I'm even more lost now...", )
+        self.robert_pos = (69, 69)
+        self.robert = Task_NPC(game, self.all_sprites, "Robert", "robert", self.robert_pos, self.robert_texts, self.robert_correct, self.robert_wrong)
+        self.robert.task_state = Robert_Task(game, self.robert.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Level_7():
+    """A class used to create an instance of level 7.
+
+     Location: Struct Shores
+     Programming concepts: Structs
+     Hint NPCs: Bill Cats
+     Task NPCs: Avid Leetcoder, Developer No.2
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
+        # NPCs
+        self.bill_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                           "These operators can be used with variables and constants.")
+        self.bill_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.bill = Hint_NPC(game, self.all_sprites, "Bill Cats", "bill", self.bill_pos, self.bill_texts)
+        
+        self.leet_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.leet_correct = ("Wow! Thanks for the help!", )
+        self.leet_wrong = ("Man! That can't be right...", )
+        self.leet_pos = (69, 69)
+        self.leet = Task_NPC(game, self.all_sprites, "Avid Leetcoder", "leet", self.leet_pos, self.leet_texts, self.leet_correct, self.leet_wrong)
+        self.leet.task_state = Leet_Task(game, self.leet.text_pointer)
+
+        self.dev_texts = ("My coffee mug keeps refilling itself!", )
+        self.dev_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
+        self.dev_wrong = ("Hmm I don't remember drinking that much...")
+        self.dev_pos = (69, 69)
+        self.dev = Task_NPC(game, self.all_sprites, "Coffee Drinker", "dev", self.dev_pos, self.dev_texts, self.dev_correct, self.dev_wrong)
+        self.dev.task_state = Dev_Task(game, self.dev.text_pointer)
+
+    def update(self, delta_time, actions):
+        if self.play_transition:
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state.enter_state()
+            self.play_transition = False
+
+        self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
+        self.player.update_player(actions) # player has its own update function.
+    
+    def render(self, display):
+        self.all_sprites.draw(self.player, display)
+
+class Test_Level():
+    """A class used to create an instance of the test level.
+
+    Location: Test map
+    Programming concepts: Nil
+    Hint NPCs: test_hint_NPC
+    Task NPC: test_task_NPC
+
+    ### NOTE:
+    Uses temporary map, player and NPC designs. Used for milestone 1 to show proof of concept.
+
+    At the time this class was made, there the map and characters etc were all imported from image files. 
+    This level may not work once the sprite logic etc is changed to handle tmx files and maybe spritesheets.
+    """
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+>>>>>>> Stashed changes
         self.all_sprites = All_sprites(game)
         self.player = Player(game, (900,500), self.all_sprites)
 
