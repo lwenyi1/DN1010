@@ -2,6 +2,7 @@
 
 Contains:
  - Game_world class
+ - Level classes
 Links to:
  - pause state
 """
@@ -17,8 +18,6 @@ class Game_World(State):
     the player plays in."""
     def __init__(self, game):
         State.__init__(self, game)
-<<<<<<< Updated upstream
-=======
 
         # Level management:
         """
@@ -56,12 +55,47 @@ class Level_0():
 
     def __init__(self, game):
         self.game = game
->>>>>>> Stashed changes
         self.play_transition = True
         self.levels = {} # TODO: Fill when working on levels
 
-<<<<<<< Updated upstream
-=======
+        # Level management:
+        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
+        self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
+                       "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
+                       "8": Test_Level(game)} 
+        self.current_level = self.levels[f"{self.level_num}"] # Change level_num into a string and use it as key for dict
+
+    def next_level(self):
+        self.level_num += 1
+        self.current_level = self.levels[f"{self.level_num}"]
+
+    def update(self, delta_time, actions): 
+        if actions['esc']:
+            new_state = Pause_champ(self.game)
+            new_state.enter_state()
+        self.current_level.update(delta_time, actions)
+    
+    def render(self, display):
+        self.current_level.render(display)
+
+"""Level classes:"""
+
+class Level_0():
+    """A class used to create an instance of level 0.
+
+     Location: IO island
+     Programming concepts: Basics of C, IO, types in C
+     Hint NPCs: Professor Floofington, Dennis Scratchie, Brian Fur-nighan, Cat Thompson
+     Task NPCs: SoC freshman, Luke Manu, Desmon Chungus
+    """
+
+    def __init__(self, game):
+        self.game = game
+        self.play_transition = True
+        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.player = Player(game, self.player_coords, self.all_sprites)
+
         # Welcome chat box
         self.show_chat = [1]        
         self.welcome_chatbox = Chatbox(game, "Developer No. 2",
@@ -239,6 +273,7 @@ class Level_2():
     def update(self, delta_time, actions):
         if self.play_transition:
             trans_state = Transition(self.game, "Entering Logic Links, Catopia...")
+            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -445,6 +480,10 @@ class Level_6():
                              "These operators can be used with variables and constants.")
         self.terry_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.terry = Hint_NPC(game, self.all_sprites, "Terry Pawvis", "terry", self.terry_pos, self.terry_texts)
+        self.brian_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
+                             "These operators can be used with variables and constants.")
+        self.brian_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
+        self.brian = Hint_NPC(game, self.all_sprites, "Brian Catnighan", "brian", self.brian_pos, self.brian_texts)
         
         self.mike_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
         self.mike_correct = ("Wow! Thanks for the help!", )
@@ -544,49 +583,38 @@ class Test_Level():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
->>>>>>> Stashed changes
         self.all_sprites = All_sprites(game)
         self.player = Player(game, (900,500), self.all_sprites)
 
-        # TODO: When working on levels, all these lesser being instances should be shoved into its level class.
+        # NPCs
         self.test_hint_NPC_texts = ("Hi there. I am a test hint NPC.", "I give no hints, except...", "Vim is the best text editor.")
-        self.test_hint_NPC = Hint_NPC(game, self.all_sprites, "test_hint_NPC", (600,350), self.test_hint_NPC_texts)
+        self.test_hint_NPC = Hint_NPC(game, self.all_sprites, "test hint NPC", "test_hint_NPC", (600,350), self.test_hint_NPC_texts)
         self.test_task_NPC_texts = ("Hi there. I am a test task NPC.", "I just need one thing from you...", "Are the developers handsome?")
         self.test_hint_NPC_correct = ("Yes it's true!", "They are quite good looking!")
         self.test_hint_NPC_wrong = ("Hmm you seem to be wrong...", "Walk away and come back to try again...")
-        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test_task_NPC", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
+        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test task NPC", "test_task_NPC", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
         self.test_task_NPC.task_state = Test_Task_State(game, self.test_task_NPC.text_pointer)
 
-        # Start of NOTE: for testing
+        # Misc
         for i in range(20):
             random_x = randint(1000,2000)
             random_y = randint(1000,2000)
             Tree((random_x, random_y), self.all_sprites)
         self.show_chat = [1]        
-        
         self.welcome_chatbox = Chatbox(game, "Developer No. 2",
                                ("Welcome to Catopia.","Use W, A, S and D to move around.","Press E while standing near NPCs to talk tothem."))
-        # End of NOTE.
 
-    def update(self, delta_time, actions): 
+    def update(self, delta_time, actions):
         if self.play_transition:
             trans_state = Transition(self.game, "Entering Catopia...")
             trans_state.enter_state()
             self.play_transition = False
-        if actions['esc']:
-            new_state = Pause_champ(self.game)
-            new_state.enter_state()
-        
+
         self.all_sprites.update(actions, (self.player.rect.center)) # for NPCs.
         self.player.update_player(actions) # player has its own update function.
         self.welcome_chatbox.update(actions, self.show_chat)
-
-        #self.game.reset_keys()
     
     def render(self, display):
-        #display.fill((255,255,255))
-        #self.game.draw_text(display, "GAME STATE", (0,0,0), self.game.GAME_W/2, self.game.GAME_H/2, 30)
-
         self.all_sprites.draw(self.player, display)
         self.test_hint_NPC.chatters()
         self.test_task_NPC.chatters()

@@ -88,7 +88,9 @@ class Hint_NPC(pygame.sprite.Sprite):
     group:
         The sprite group the NPC will be added to.
     name:
-        The name of the NPC. Important to keep this alligned with the image name.
+        The name of the NPC. 
+    file_name:
+        The name of the NPC's image file.
     pos:
         The position of the NPC.
     self.image:
@@ -110,9 +112,9 @@ class Hint_NPC(pygame.sprite.Sprite):
         Displays the chat box for the NPC.
     
     """
-    def __init__(self, game, group, name, pos, texts):
+    def __init__(self, game, group, name, file_name, pos, texts):
         super().__init__(group)
-        self.image = pygame.image.load(f'game_assets/sprites/{name}.png').convert_alpha() # TODO: change this line if upgrading to using spritesheets
+        self.image = pygame.image.load(f'game_assets/sprites/{file_name}.png').convert_alpha() # TODO: change this line if upgrading to using spritesheets
         self.rect = self.image.get_rect(center = pos)
         self.chat_box = Chatbox(game, name, texts)
         self.show_chat = [0]
@@ -189,9 +191,9 @@ class Task_NPC(pygame.sprite.Sprite):
     """
     task_state = None
     
-    def __init__(self, game, group, name, pos, start_texts, correct_texts, wrong_texts):
+    def __init__(self, game, group, name, file_name, pos, start_texts, correct_texts, wrong_texts):
         super().__init__(group)
-        self.image = pygame.image.load(f'game_assets/sprites/{name}.png').convert_alpha() # TODO: change this line if upgrading to using spritesheets
+        self.image = pygame.image.load(f'game_assets/sprites/{file_name}.png').convert_alpha() # TODO: change this line if upgrading to using spritesheets
         self.rect = self.image.get_rect(center = pos)
         self.game = game
         self.name = name

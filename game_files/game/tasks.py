@@ -2,11 +2,8 @@
 
 Contains:
  - parent task class
-<<<<<<< Updated upstream
  - test task class
-=======
  - Level 0:
->>>>>>> Stashed changes
  - Level 1:
  - Level 2:
  - Level 3:
@@ -14,11 +11,7 @@ Contains:
  - Level 5:
  - Level 6:
  - Level 7:
-<<<<<<< Updated upstream
- - Level 8:
-=======
  - test task class
->>>>>>> Stashed changes
 """
 from game.state import State
 from game.sub_states import *
@@ -83,6 +76,278 @@ class Task_State(State):
         display.fill((0,0,0))
         self.task_render(display)
 
+"""Level 0 tasks:"""
+
+class Freshman_Task(Task_State):
+    """Choose the correct function which prints the book's words"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Luke_Task(Task_State):
+    """Choose the correct function to read in something and print out a response"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Desmon_Task(Task_State):
+    """Choose the correct line of code which type casts a float into a double"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 1 tasks"""
+
+class MacOS_Task(Task_State):
+    """Choose the correct function which reads in the number of apples 
+    in basket A and B and returns the total sum"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Coffee_Task(Task_State):
+    """Choose the correct function which returns the amount of coffee a mug holds"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Student_Task(Task_State):
+    """Choose the correct function which calculates the quadratic formula"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 2 tasks"""
+
+class Jamie_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Windows_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Punk_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 3 tasks"""
+
+class Bensen_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Fisher_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Notepad_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 4 tasks"""
+
+class Linux_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Tian_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Sane_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 5 tasks"""
+
+class Json_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Rascal_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Chad_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 6 tasks"""
+
+class Mike_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Vim_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Robert_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Level 7 tasks"""
+
+class Leet_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+class Dev_Task(Task_State):
+    """TODO"""
+    def __init__(self, game, result):
+        Task_State.__init__(self, game, result)
+
+    def task_update(self, delta_time, actions):
+        pass
+
+    def task_render(self, display):
+        pass
+
+"""Test level tasks:"""
+
 class Test_Task_State(Task_State):
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
@@ -99,8 +364,6 @@ class Test_Task_State(Task_State):
             if self.no_button.is_clicked():
                 self.result[0] = 2
                 self.play_end_transition = True
-        if actions['up']:
-            self.play_transition = True
 
     def task_render(self, display):
         self.game.draw_text(display, "Are the developers handsome?", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.3, 30)
