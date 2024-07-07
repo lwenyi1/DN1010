@@ -31,7 +31,7 @@ class All_sprites(pygame.sprite.Group):
         self.half_game_h = game.GAME_H / 2
         self.offset = pygame.math.Vector2()
 
-        self.ground_surf = pygame.image.load('game_assets/sprites/test_ground.png') # TODO: change this to load maps for each level
+        self.ground_surf = pygame.image.load('game_assets/sprites/level_1.png') # TODO: change this to load maps for each level
         self.ground_rect = self.ground_surf.get_rect(topleft = (0,0))
     
     def draw(self, player, display):

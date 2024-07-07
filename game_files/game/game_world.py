@@ -42,41 +42,6 @@ class Game_World(State):
     def render(self, display):
         self.current_level.render(display)
 
-"""Level classes:"""
-
-class Level_0():
-    """A class used to create an instance of level 0.
-
-     Location: IO island
-     Programming concepts: Basics of C, IO, types in C
-     Hint NPCs: Professor Floofington, Dennis Scratchie, Brian Fur-nighan, Cat Thompson
-     Task NPCs: SoC freshman, Luke Manu, Desmon Chungus
-    """
-
-    def __init__(self, game):
-        self.game = game
-        self.play_transition = True
-        self.levels = {} # TODO: Fill when working on levels
-
-        # Level management:
-        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
-        self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
-                       "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
-                       "8": Test_Level(game)} 
-        self.current_level = self.levels[f"{self.level_num}"] # Change level_num into a string and use it as key for dict
-
-    def next_level(self):
-        self.level_num += 1
-        self.current_level = self.levels[f"{self.level_num}"]
-
-    def update(self, delta_time, actions): 
-        if actions['esc']:
-            new_state = Pause_champ(self.game)
-            new_state.enter_state()
-        self.current_level.update(delta_time, actions)
-    
-    def render(self, display):
-        self.current_level.render(display)
 
 """Level classes:"""
 
@@ -165,6 +130,12 @@ class Level_0():
         self.all_sprites.draw(self.player, display)
         if self.show_chat[0] == 1:
             self.welcome_chatbox.print()
+        self.prof_floof.chatters()
+        self.dennis.chatters()
+        self.brian.chatters()
+        self.soc_freshman.chatters()
+        self.luke.chatters()
+        self.desmon.chatters()
 
 class Level_1():
     """A class used to create an instance of level 1.
@@ -222,6 +193,11 @@ class Level_1():
     
     def render(self, display):
         self.all_sprites.draw(self.player, display)
+
+        self.john.chatters()
+        self.macOS.chatters()
+        self.coffee.chatters()
+        self.student.chatters()
 
 class Level_2():
     """A class used to create an instance of level 2.
@@ -282,6 +258,11 @@ class Level_2():
     
     def render(self, display):
         self.all_sprites.draw(self.player, display)
+
+        self.mark.chatters()
+        self.jamie.chatters()
+        self.windows.chatters()
+        self.punk.chatters()
 
 class Level_3():
     """A class used to create an instance of level 3.
@@ -345,6 +326,12 @@ class Level_3():
     def render(self, display):
         self.all_sprites.draw(self.player, display)
 
+        self.thomp.chatters()
+        self.bensen.chatters()
+        self.fisher.chatters()
+        self.alan.chatters()
+        self.notepad.chatters()
+
 class Level_4():
     """A class used to create an instance of level 4.
 
@@ -402,6 +389,11 @@ class Level_4():
     def render(self, display):
         self.all_sprites.draw(self.player, display)
 
+        self.linus.chatters()
+        self.linux.chatters()
+        self.tian.chatters()
+        self.sane.chatters()
+
 class Level_5():
     """A class used to create an instance of level 5.
 
@@ -458,6 +450,11 @@ class Level_5():
     
     def render(self, display):
         self.all_sprites.draw(self.player, display)
+
+        self.zuck.chatters()
+        self.json.chatters()
+        self.rascal.chatters()
+        self.chad.chatters()
 
 class Level_6():
     """A class used to create an instance of level 6.
@@ -518,6 +515,11 @@ class Level_6():
     def render(self, display):
         self.all_sprites.draw(self.player, display)
 
+        self.terry.chatters()
+        self.mike.chatters()
+        self.vim.chatters()
+        self.robert.chatters()
+
 class Level_7():
     """A class used to create an instance of level 7.
 
@@ -566,6 +568,10 @@ class Level_7():
     def render(self, display):
         self.all_sprites.draw(self.player, display)
 
+        self.bill.chatters()
+        self.leet.chatters()
+        self.dev.chatters()
+
 class Test_Level():
     """A class used to create an instance of the test level.
 
@@ -588,12 +594,12 @@ class Test_Level():
 
         # NPCs
         self.test_hint_NPC_texts = ("Hi there. I am a test hint NPC.", "I give no hints, except...", "Vim is the best text editor.")
-        self.test_hint_NPC = Hint_NPC(game, self.all_sprites, "test hint NPC", "test_hint_NPC", (600,350), self.test_hint_NPC_texts)
-        self.test_task_NPC_texts = ("Hi there. I am a test task NPC.", "I just need one thing from you...", "Are the developers handsome?")
+        self.test_hint_NPC = Hint_NPC(game, self.all_sprites, "test hint NPC", "linus", (600,350), self.test_hint_NPC_texts)
+        self.test_task_NPC_texts = ("Hi there. I am a test task NPC.", )
         self.test_hint_NPC_correct = ("Yes it's true!", "They are quite good looking!")
         self.test_hint_NPC_wrong = ("Hmm you seem to be wrong...", "Walk away and come back to try again...")
-        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test task NPC", "test_task_NPC", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
-        self.test_task_NPC.task_state = Test_Task_State(game, self.test_task_NPC.text_pointer)
+        self.test_task_NPC = Task_NPC(game, self.all_sprites, "test task NPC", "alan", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
+        self.test_task_NPC.task_state = Student_Task(game, self.test_task_NPC.text_pointer)
 
         # Misc
         for i in range(20):

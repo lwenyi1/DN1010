@@ -2,24 +2,32 @@
 
 Contains:
  - parent task class
- - test task class
- - Level 0:
- - Level 1:
+ - Level 0: Freshman_Task, Luke_Task, Desmon_Task
+ - Level 1: MacOS_Task, Coffee_Task, Student_Task
  - Level 2:
  - Level 3:
  - level 4:
  - Level 5:
  - Level 6:
  - Level 7:
- - test task class
+ - test task class  
+ 
+Tasks are named based on the character they are tagged to
 """
 from game.state import State
 from game.sub_states import *
+from game.elements import *
 
 class Task_State(State):
     """The parent class for all task game states.
     
-    Each child class should define its own task_update() function based on what the task is. 
+    Each child class should define its own task_update() function based on what the task is.  
+    Initialise buttons in init().  
+    Update buttons in task_update().  
+    Print and update button colours in task_render().  
+
+    ### Note:
+    Each line 40 characters at font size 22 looks good for the question.
 
     Attributes:
     ----------
@@ -82,34 +90,112 @@ class Freshman_Task(Task_State):
     """Choose the correct function which prints the book's words"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L0_freshman_a.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L0_freshman_b.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L0_freshman_c.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L0_freshman_d.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the program", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "that correctly prints the words", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Luke_Task(Task_State):
     """Choose the correct function to read in something and print out a response"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L0_luke_a.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L0_luke_b.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L0_luke_c.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L0_luke_d.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the program that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can read in words and print a reply", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Desmon_Task(Task_State):
-    """Choose the correct line of code which type casts a float into a double"""
+    """Choose the correct line of code which type casts a float into an int"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L0_desmon_a.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L0_desmon_b.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L0_desmon_c.png", (self.game.GAME_W*1/3, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L0_desmon_d.png", (self.game.GAME_W*2/3, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the lines that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can correctly typecast from float to int", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 1 tasks"""
 
@@ -118,34 +204,113 @@ class MacOS_Task(Task_State):
     in basket A and B and returns the total sum"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L1_macOS_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L1_macOS_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L1_macOS_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L1_macOS_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "returns the sum of apples in A and B", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Coffee_Task(Task_State):
     """Choose the correct function which returns the amount of coffee a mug holds"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L1_coffee_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L1_coffee_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L1_coffee_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L1_coffee_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "returns the amount of coffee a mug holds", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Student_Task(Task_State):
     """Choose the correct function which calculates the quadratic formula"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L1_student_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L1_student_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L1_student_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L1_student_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 20)
+        self.game.draw_text(display, "returns one of the solutions to a quadratic eqn", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 20)
+        self.game.draw_text(display, "Note: sqrt() is part of the math.h library", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.2, 20)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 2 tasks"""
 
@@ -366,7 +531,7 @@ class Test_Task_State(Task_State):
                 self.play_end_transition = True
 
     def task_render(self, display):
-        self.game.draw_text(display, "Are the developers handsome?", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.3, 30)
+        self.game.draw_text(display, "1234512345123451234512345123451234512345", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.3, 22)
 
         self.yes_button.print()
         self.yes_button.change_colour()
