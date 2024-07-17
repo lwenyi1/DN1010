@@ -5,6 +5,7 @@ Contains the game class.
 
 import pygame, os, time
 from pygame.locals import *
+import pytmx
 
 # Load game states, starting from title screen
 from game.title_screen import Title
@@ -93,6 +94,10 @@ class Game():
         self.state_stack = []
         self.load_assets()
         self.load_states()
+        
+        # Create sprite groups and player
+        self.All_spritesll_sprites = All_sprites(self)
+        self.player = Player(self, (100, 100), self.All_sprites)
 
     def game_loop(self):
         while self.playing:
@@ -163,7 +168,10 @@ class Game():
 
     def update(self):
         self.state_stack[-1].update(self.dt,self.actions)
-
+        self.all_sprites.update()
+        self.all_sprites.draw(self.player, self.screen)  # Draw all sprites
+        self.player.update_player(self.actions)  # Update player movement based on actions
+    
     def render(self):
         """Render current state to the screen"""
         self.state_stack[-1].render(self.game_canvas)
