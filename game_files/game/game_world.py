@@ -21,7 +21,7 @@ class Game_World(State):
 
         # Level management:
         
-        self.level_num = 3 # Number which acts as the key to the level classes in the dictionary
+        self.level_num = 7 # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
@@ -289,7 +289,7 @@ class Level_3():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game, "loop_lake") #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "loop_lake_final") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
@@ -360,7 +360,7 @@ class Level_4():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "pointer_peaks") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
@@ -423,7 +423,7 @@ class Level_5():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "array_arena") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
@@ -486,7 +486,7 @@ class Level_6():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "memory_meadows") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
@@ -551,7 +551,7 @@ class Level_7():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "struct_shores") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
@@ -577,7 +577,7 @@ class Level_7():
 
     def update(self, delta_time, actions):
         if self.play_transition:
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state = Transition(self.game, "Entering Struct Shores, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
