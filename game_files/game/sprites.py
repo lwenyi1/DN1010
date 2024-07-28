@@ -8,6 +8,7 @@ Contains:
  - the NPC class
 """
 import pygame, time
+import pytmx
 from game.tasks import *
 from game.elements import *
 
@@ -19,7 +20,7 @@ class Tree(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
         self.image = pygame.image.load('game_assets/sprites/test_tree.png').convert_alpha()
-        self.rect = self.image.get_rect(topleft = pos)
+        self.rect = self.image.get_rect(topleft = pos)      
 
 
 # End of NOTE
@@ -31,11 +32,44 @@ class All_sprites(pygame.sprite.Group):
         self.half_game_h = game.GAME_H / 2
         self.offset = pygame.math.Vector2()
 
-        self.ground_surf = pygame.image.load('game_assets/sprites/level_1.png') # TODO: change this to load maps for each level
+        # Load the TMX map
+        tmx_data = pytmx.load_pygame('game_assets/maps/logic_links.tmx')
+        
+        # Create a surface to render the map
+        map_width = tmx_data.width * tmx_data.tilewidth
+        map_height = tmx_data.height * tmx_data.tileheight
+        self.ground_surf = pygame.Surface((map_width, map_height))
+
+        # Draw the map onto the surface
+        for layer in tmx_data.visible_layers:
+            if isinstance(layer, pytmx.TiledTileLayer):
+                for x, y, gid in layer:
+                    tile = tmx_data.get_tile_image_by_gid(gid)
+                    if tile:
+                        self.ground_surf.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
+
+        new_width = int(map_width * 2)
+        new_height = int(map_height * 2)
+        self.ground_surf = pygame.transform.scale(self.ground_surf, (new_width, new_height))
+
+        # Handle collision layer
+        self.collision_rects = []
+        for obj in tmx_data.objects:
+            if obj.name == "Collision":
+                rect = pygame.Rect(obj.x * 2, obj.y * 2, obj.width * 2, obj.height * 2)
+                self.collision_rects.append(rect)
+
         self.ground_rect = self.ground_surf.get_rect(topleft = (0,0))
     
+    
+    def check_collision(self, rect):
+        """Check if a given rectangle collides with any collision rectangles."""
+        for collision_rect in self.collision_rects:
+            if rect.colliderect(collision_rect):
+                return True
+        return False
+    
     def draw(self, player, display):
-
         # camera logic
         self.offset.x = player.rect.centerx - self.half_game_w
         self.offset.y = player.rect.centery - self.half_game_h
@@ -47,7 +81,7 @@ class All_sprites(pygame.sprite.Group):
         ground_offset = self.ground_rect.topleft - self.offset
         display.blit(self.ground_surf,ground_offset)
 
-		# active elements
+        # active elements
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
             display.blit(sprite.image,offset_pos)
@@ -62,21 +96,34 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = pos)
         self.direction = pygame.math.Vector2()
         self.speed = game.speed * 3
+        self.original_rect = self.rect.copy()  # Store the original position
     
     def update_player(self, actions):
+        original_rect = self.rect.copy()  # Store the original position
+
+        # Update direction based on actions
         if actions['up']:
             self.direction.y = -1
         elif actions['down']:
             self.direction.y = 1
         else:
             self.direction.y = 0
+
         if actions['left']:
             self.direction.x = -1
         elif actions['right']:
             self.direction.x = 1
         else:
             self.direction.x = 0
+        
+        # Move player and check for collision
         self.rect.center += self.direction * self.speed
+        
+        # Check collision with map objects using the game's sprite group
+        if self.game.all_sprites.check_collision(self.rect):
+            self.rect = original_rect  # Revert to original position if collision detected
+
+    
 
 #TODO add in the NPC class
 
