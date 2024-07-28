@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="9">
  <tileset firstgid="1" source="beach tileset.tsx"/>
+ <objectgroup id="3" name="Object Layer 1">
+  <object id="1" x="0" y="-1" width="78" height="639"/>
+  <object id="2" x="79" y="576" width="864" height="64"/>
+  <object id="3" x="279" y="149" width="87" height="65"/>
+  <object id="4" x="354" y="354" width="77" height="68"/>
+  <object id="5" x="510" y="258" width="71" height="91"/>
+  <object id="6" x="661" y="195" width="60" height="60"/>
+  <object id="7" x="780" y="286" width="49" height="70"/>
+  <object id="8" x="903" y="164" width="57" height="57"/>
+ </objectgroup>
  <layer id="1" name="Ground + water" width="64" height="40">
   <data encoding="csv">
 167,167,167,167,167,338,335,333,333,339,336,335,339,333,338,336,338,333,333,336,339,336,337,338,333,334,333,334,338,338,339,333,334,338,336,338,334,338,339,336,338,335,338,334,339,336,333,336,334,339,338,334,335,333,334,337,338,336,338,335,334,338,334,339,

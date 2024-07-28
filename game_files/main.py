@@ -88,16 +88,12 @@ class Game():
         self.actions = {"left": False, "right": False, "up" : False, "down" : False, "action1" : False, 
                         "action2" : False, "click": False, "esc": False }
         self.dt, self.prev_time = 0, 0 # self.dt is the time between cycles
-        self.speed = 2 # change this to multiply the overall game speed
+        self.speed = 1 # change this to multiply the overall game speed
         
         # Game management
         self.state_stack = []
         self.load_assets()
         self.load_states()
-        
-        # Create sprite groups and player
-        self.All_spritesll_sprites = All_sprites(self)
-        self.player = Player(self, (100, 100), self.All_sprites)
 
     def game_loop(self):
         while self.playing:
@@ -168,9 +164,9 @@ class Game():
 
     def update(self):
         self.state_stack[-1].update(self.dt,self.actions)
-        self.all_sprites.update()
-        self.all_sprites.draw(self.player, self.screen)  # Draw all sprites
-        self.player.update_player(self.actions)  # Update player movement based on actions
+        #self.all_sprites.update()
+        #self.all_sprites.draw(self.player, self.screen)  # Draw all sprites
+        #self.player.update_player(self.actions)  # Update player movement based on actions
     
     def render(self):
         """Render current state to the screen"""
@@ -180,6 +176,8 @@ class Game():
 
     def get_dt(self):
         """Get delta time"""
+        # Delta time was meant for animation but we never got down to doing it.
+        # Leaving here for future improvements.
         now = time.time()
         self.dt = now - self.prev_time
         self.prev_time = now

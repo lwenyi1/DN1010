@@ -20,24 +20,36 @@ class Game_World(State):
         State.__init__(self, game)
 
         # Level management:
-        """
-        self.level_num = 8 # Number which acts as the key to the level classes in the dictionary
+        
+        self.level_num = 3 # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
         self.current_level = self.levels[f"{self.level_num}"] # Change level_num into a string and use it as key for dict
-        """
-        self.current_level = Test_Level(game)
+        self.radius = 100 # radius for end point
+        
+        # For testing purposes:
+        #self.current_level = Test_Level(game)
 
-    def next_level(self):
-        self.level_num += 1
-        self.current_level = self.levels[f"{self.level_num}"]
+    def go_next_level(self):
+        if (self.current_level.end_point[0] - self.radius <= self.current_level.player.rect.center[0] <= self.current_level.end_point[0] + self.radius and 
+            self.current_level.end_point[1] - self.radius <= self.current_level.player.rect.center[1] <= self.current_level.end_point[1] + self.radius):  
+          #print("deez nuts")
+            if (self.level_num == 7):
+                print("game over")
+            elif (self.level_num == 8):
+                print("go next")
+            else:
+                self.level_num += 1
+                self.current_level = self.levels[f"{self.level_num}"]
 
     def update(self, delta_time, actions): 
         if actions['esc']:
             new_state = Pause_champ(self.game)
             new_state.enter_state()
         self.current_level.update(delta_time, actions)
+        print(self.current_level.player.rect.center)
+        #self.go_next_level()
     
     def render(self, display):
         self.current_level.render(display)
@@ -57,9 +69,10 @@ class Level_0():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
-        self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
+        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
+        self.player_coords = (900, 500) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
+        self.end_point = (2533, 588)
 
         # Welcome chat box
         self.show_chat = [1]        
@@ -69,7 +82,8 @@ class Level_0():
         # NPCs
         self.prof_floof_texts = ("Greetings!", 
                                  "Everyone here is cat themed because        Developer No. 1 likes cats.",
-                                 "Strange things are happening around here...",
+                                 "Some strange things are happening around   here,",
+                                 "And somehow everyone has become incompetent"
                                  "We need your help to fix them!", 
                                  "Pick up all the knowledge you can from the Hint NPCs,",
                                  "Then fix the problems posed by Task NPCs.",
@@ -149,9 +163,10 @@ class Level_1():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "arithmetic_acres") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
+        self.end_point = (2537, 880)
 
         # NPCs
         self.john_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
@@ -211,9 +226,10 @@ class Level_2():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "logic_links_2") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
+        self.end_point = (2365, 821)
 
         # NPCs
         self.mark_texts = (f"If-else statements in C let you to execute different blocks of code based on whether acondition is true or false",
@@ -223,25 +239,23 @@ class Level_2():
         self.mark_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.mark = Hint_NPC(game, self.all_sprites, "Markus Fursson", "mark", self.mark_pos, self.mark_texts)
         
-        self.jamie_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.jamie_texts = ("I just got back my DTK results,", "Wonder what grade I got?")
         self.jamie_correct = ("Wow! Thanks for the help!", )
-        self.jamie_wrong = ("Man! That can't be right...", )
+        self.jamie_wrong = ("Time to SU this...", )
         self.jamie_pos = (69, 69)
         self.jamie = Task_NPC(game, self.all_sprites, "Jamie", "jamie", self.jamie_pos, self.jamie_texts, self.jamie_correct, self.jamie_wrong)
         self.jamie.task_state = Jamie_Task(game, self.jamie.text_pointer)
 
-        self.windows_texts = ("My coffee mug keeps refilling itself!", 
-                             "Not that I'm complaining but,",
-                             "Wonder how much free coffee I've gotten?")
-        self.windows_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.windows_wrong = ("Hmm I don't remember drinking that much...")
+        self.windows_texts = ("I love Windows but,", "Every update introduces new glitches...", "What should I do to sieve them out?")
+        self.windows_correct = ("Thanks! Now I don't have to change to Mac!", )
+        self.windows_wrong = ("Maybe Mac is better...")
         self.windows_pos = (69, 69)
         self.windows = Task_NPC(game, self.all_sprites, "Windows User", "windows", self.windows_pos, self.windows_texts, self.windows_correct, self.windows_wrong)
         self.windows.task_state = Windows_Task(game, self.windows.text_pointer)
 
-        self.punk_texts = ("I have no idea how to solve quadratic      equations.")
-        self.punk_correct = ("That makes sense!", )
-        self.punk_wrong = ("I'm even more lost now...", )
+        self.punk_texts = ("I hate rules!", "Fighting is my way of life!")
+        self.punk_correct = ("I'm gonna mess them up", )
+        self.punk_wrong = ("Guess I'll die :/", )
         self.punk_pos = (69, 69)
         self.punk = Task_NPC(game, self.all_sprites, "Young Punk", "punk", self.punk_pos, self.punk_texts, self.punk_correct, self.punk_wrong)
         self.punk.task_state = Punk_Task(game, self.punk.text_pointer)
@@ -249,7 +263,6 @@ class Level_2():
     def update(self, delta_time, actions):
         if self.play_transition:
             trans_state = Transition(self.game, "Entering Logic Links, Catopia...")
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -268,7 +281,7 @@ class Level_3():
     """A class used to create an instance of level 3.
 
      Location: Loop Lake
-     Programming concepts: For and while loops, recursion
+     Programming concepts: For and while loops
      Hint NPCs: Cat Thompson, Alan Purring
      Task NPCs: Bensen, Local Fisherman, Notepad User
     """
@@ -276,47 +289,50 @@ class Level_3():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "loop_lake") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.thomp_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                           "These operators can be used with variables and constants.")
+        self.thomp_texts = (f"Loops can be used to repeatedly execute    lines of code while a condition is met.",
+                           "While loops take in a condition and        repeatedly execute the block of code while the condition is true."
+                           "While loops can be used for indeterminate  interation."
+                           "For loops specify initialisation, conditionand increment or decrement in one line."
+                           "For loops are more suitable for known      interation counts.")
         self.thomp_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.thomp = Hint_NPC(game, self.all_sprites, "Cat Thompson", "thomp", self.thomp_pos, self.thomp_texts)
         
-        self.bensen_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
-        self.bensen_correct = ("Wow! Thanks for the help!", )
-        self.bensen_wrong = ("Man! That can't be right...", )
+        self.bensen_texts = ("Hi I'm Bensen!", "Counting to 69 is my favourite passtime!")
+        self.bensen_correct = ("69 :)", )
+        self.bensen_wrong = ("68 :(", )
         self.bensen_pos = (69, 69)
         self.bensen = Task_NPC(game, self.all_sprites, "Bensen", "bensen", self.bensen_pos, self.bensen_texts, self.bensen_correct, self.bensen_wrong)
         self.bensen.task_state = Bensen_Task(game, self.bensen.text_pointer)
 
-        self.fisher_texts = ("My coffee mug keeps refilling itself!", 
-                             "Not that I'm complaining but,",
-                             "Wonder how much free coffee I've gotten?")
-        self.fisher_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.fisher_wrong = ("Hmm I don't remember drinking that much...")
+        self.fisher_texts = ("My fish these days seem to be glitching out", 
+                             "I need a way to sort out which fish out of all the fish I caught are glitched.")
+        self.fisher_correct = ("Great! No more selling glitched fish!", )
+        self.fisher_wrong = ("How am I supposed to sort them now...")
         self.fisher_pos = (69, 69)
         self.fisher = Task_NPC(game, self.all_sprites, "Local Fisherman", "fisher", self.fisher_pos, self.fisher_texts, self.fisher_correct, self.fisher_wrong)
         self.fisher.task_state = Fisher_Task(game, self.fisher.text_pointer)
 
-        self.alan_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                           "These operators can be used with variables and constants.")
+        self.alan_texts = (f"Recursion is when a function calls itself  to solve a smaller instance of the same    problem.",
+                           "It continues this process until it reaches a base case, which stops the recursion.",
+                           "While the concept sounds similar to loops, recursion can be more useful for solving   problems like tree or graph traversal.")
         self.alan_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.alan = Hint_NPC(game, self.all_sprites, "Alan Purring", "alan", self.alan_pos, self.alan_texts)
 
-        self.notepad_texts = ("I have no idea how to solve quadratic      equations.")
-        self.notepad_correct = ("That makes sense!", )
-        self.notepad_wrong = ("I'm even more lost now...", )
+        self.notepad_texts = ("I am a notepad. I print things on myself.", "Help me never stop printing.")
+        self.notepad_correct = ("Notes are a lifestyle", )
+        self.notepad_wrong = ("No notes, no life...", )
         self.notepad_pos = (69, 69)
         self.notepad = Task_NPC(game, self.all_sprites, "Notepad User", "notepad", self.notepad_pos, self.notepad_texts, self.notepad_correct, self.notepad_wrong)
         self.notepad.task_state = Notepad_Task(game, self.notepad.text_pointer)
 
     def update(self, delta_time, actions):
         if self.play_transition:
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state = Transition(self.game, "Entering Loop Lake, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -344,42 +360,43 @@ class Level_4():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.linus_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                           "These operators can be used with variables and constants.")
+        self.linus_texts = ("Pointers in C are variables that store     memory address of other variables.",
+                           "Pointers can be used by declaring them with the '*' symbol, assigning them the address of a variable using '&'.",
+                           "Accessing or modifying the value at the    address they point to is done with the     dereference operator, '*'.")
         self.linus_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.linus = Hint_NPC(game, self.all_sprites, "Linus Pawvalds", "linus", self.linus_pos, self.linus_texts)
         
-        self.linux_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
-        self.linux_correct = ("Wow! Thanks for the help!", )
-        self.linux_wrong = ("Man! That can't be right...", )
+        self.linux_texts = ("My memory is all over the place...", "I need something to point to my memory     addresses properly.")
+        self.linux_correct = ("I remember!", )
+        self.linux_wrong = ("I forgor...", )
         self.linux_pos = (69, 69)
         self.linux = Task_NPC(game, self.all_sprites, "Linux Enjoyer", "linux", self.linux_pos, self.linux_texts, self.linux_correct, self.linux_wrong)
         self.linux.task_state = Linux_Task(game, self.linux.text_pointer)
 
-        self.tian_texts = ("My coffee mug keeps refilling itself!", 
-                             "Not that I'm complaining but,",
-                             "Wonder how much free coffee I've gotten?")
-        self.tian_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.tian_wrong = ("Hmm I don't remember drinking that much...")
+        self.tian_texts = ("I found my grandma's pho recipe!", 
+                           "But I'm not sure how much water to add...")
+        self.tian_correct = ("So that's how much!", )
+        self.tian_wrong = ("That can't be right...")
         self.tian_pos = (69, 69)
         self.tian = Task_NPC(game, self.all_sprites, "Tian Duck", "tian", self.tian_pos, self.tian_texts, self.tian_correct, self.tian_wrong)
         self.tian.task_state = Tian_Task(game, self.tian.text_pointer)
 
-        self.sane_texts = ("I have no idea how to solve quadratic      equations.")
-        self.sane_correct = ("That makes sense!", )
-        self.sane_wrong = ("I'm even more lost now...", )
+        self.sane_texts = ("I have an exam at COM 1 but I'm not sure where to go,",
+                           "Could you help print the address?")
+        self.sane_correct = ("Oh! That's where it is", )
+        self.sane_wrong = ("I'm going to get lost...", )
         self.sane_pos = (69, 69)
         self.sane = Task_NPC(game, self.all_sprites, "Most Sane CEG Student", "sane", self.sane_pos, self.sane_texts, self.sane_correct, self.sane_wrong)
         self.sane.task_state = Sane_Task(game, self.sane.text_pointer)
 
     def update(self, delta_time, actions):
         if self.play_transition:
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state = Transition(self.game, "Entering Pointer Peaks, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -406,42 +423,43 @@ class Level_5():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.zuck_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                           "These operators can be used with variables and constants.")
+        self.zuck_texts = ("Arrays are collections of elements of the  same type stored in contiguous memory      locations.",
+                           "To declare an array, specify the type, nameand size. For example,                     int numbers[10];", 
+                           "Access elements using the index notation.  For example,                               numbers[0]; for the first element")
         self.zuck_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.zuck = Hint_NPC(game, self.all_sprites, "Mark Zucatberg", "zuck", self.zuck_pos, self.zuck_texts)
         
-        self.json_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+        self.json_texts = ("This arena has a semi-rich history!", "It was of slight importance in the past,", 
+                           "I'm making a list of the number of people  who died over the years.")
         self.json_correct = ("Wow! Thanks for the help!", )
         self.json_wrong = ("Man! That can't be right...", )
         self.json_pos = (69, 69)
         self.json = Task_NPC(game, self.all_sprites, "Json K", "json", self.json_pos, self.json_texts, self.json_correct, self.json_wrong)
         self.json.task_state = Json_Task(game, self.json.text_pointer)
 
-        self.rascal_texts = ("My coffee mug keeps refilling itself!", 
-                             "Not that I'm complaining but,",
-                             "Wonder how much free coffee I've gotten?")
-        self.rascal_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.rascal_wrong = ("Hmm I don't remember drinking that much...")
+        self.rascal_texts = ("I've got a list of important numbers here,", 
+                             "But I can't read")
+        self.rascal_correct = ("Much thanks.", )
+        self.rascal_wrong = ("What! Useless...")
         self.rascal_pos = (69, 69)
         self.rascal = Task_NPC(game, self.all_sprites, "Local Rascal", "rascal", self.rascal_pos, self.rascal_texts, self.rascal_correct, self.rascal_wrong)
         self.rascal.task_state = Rascal_Task(game, self.rascal.text_pointer)
 
-        self.chad_texts = ("I have no idea how to solve quadratic      equations.")
-        self.chad_correct = ("That makes sense!", )
-        self.chad_wrong = ("I'm even more lost now...", )
+        self.chad_texts = ("Hey there", "I'm collecting data on the occurences of   glitches in Catopia.", "Need some help storing the data!")
+        self.chad_correct = ("Thanks!", )
+        self.chad_wrong = ("The data was lost...", )
         self.chad_pos = (69, 69)
         self.chad = Task_NPC(game, self.all_sprites, "Chad Ko", "chad", self.chad_pos, self.chad_texts, self.chad_correct, self.chad_wrong)
         self.chad.task_state = Chad_Task(game, self.chad.text_pointer)
 
     def update(self, delta_time, actions):
         if self.play_transition:
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state = Transition(self.game, "Entering Array Arena, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -468,44 +486,45 @@ class Level_6():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.terry_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                             "These operators can be used with variables and constants.")
+        self.terry_texts = ("Sometimes while programming in C, we do notwant to hard code how much memory is used.",
+                             "For example, when creating an array, users may require different array sizes. In this case, we dynamically allocate the memory to the array using malloc.",
+                             "To determine the size of the data type, we can use 'sizeof'.",
+                             "An example of using malloc:                int *list = (int*)malloc(n * sizeof(int)); where n is the desired size of the array.",
+                             "We can also use calloc:                    int *list = (int*)calloc(n, sizeof(int));",
+                             "To reallocate the memory, one can use:     list = (int*)realloc(list, n*sizeof(int));",
+                             "To free the allocated memory before the    program ends, use free(). Continuing the   previous example: free(list);")
         self.terry_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.terry = Hint_NPC(game, self.all_sprites, "Terry Pawvis", "terry", self.terry_pos, self.terry_texts)
-        self.brian_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                             "These operators can be used with variables and constants.")
-        self.brian_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
-        self.brian = Hint_NPC(game, self.all_sprites, "Brian Catnighan", "brian", self.brian_pos, self.brian_texts)
-        
-        self.mike_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
+
+        self.mike_texts = ("I'm detecting strange energy sources aroundthe meadows,", "I need a way to create containers that can store the energy and vary in size based on how much energy is scanned!")
         self.mike_correct = ("Wow! Thanks for the help!", )
         self.mike_wrong = ("Man! That can't be right...", )
         self.mike_pos = (69, 69)
         self.mike = Task_NPC(game, self.all_sprites, "Microsoft Mike", "mike", self.mike_pos, self.mike_texts, self.mike_correct, self.mike_wrong)
         self.mike.task_state = Mike_Task(game, self.mike.text_pointer)
 
-        self.vim_texts = ("My coffee mug keeps refilling itself!", )
-        self.vim_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.vim_wrong = ("Hmm I don't remember drinking that much...")
+        self.vim_texts = ("Vim is the best text editor!", "But there's too many shortcuts and macros  to remember...", "I gotta reallocate my memory to fit in all the Vim knowledge!")
+        self.vim_correct = ("I love Vim!", )
+        self.vim_wrong = ("I might have to swap to VSC...")
         self.vim_pos = (69, 69)
         self.vim = Task_NPC(game, self.all_sprites, "Vim User", "vim", self.vim_pos, self.vim_texts, self.vim_correct, self.vim_wrong)
         self.vim.task_state = Vim_Task(game, self.vim.text_pointer)
 
-        self.robert_texts = ("I have no idea how to solve quadratic      equations.")
-        self.robert_correct = ("That makes sense!", )
-        self.robert_wrong = ("I'm even more lost now...", )
+        self.robert_texts = ("Memory leaks are occuring all over the     island!", "I bet the developers forgot to free the    memory!")
+        self.robert_correct = ("All fixed now!", )
+        self.robert_wrong = ("It's all still a mess...", )
         self.robert_pos = (69, 69)
         self.robert = Task_NPC(game, self.all_sprites, "Robert", "robert", self.robert_pos, self.robert_texts, self.robert_correct, self.robert_wrong)
         self.robert.task_state = Robert_Task(game, self.robert.text_pointer)
 
     def update(self, delta_time, actions):
         if self.play_transition:
-            trans_state = Transition(self.game, "Entering Arithmetic Acres, Catopia...")
+            trans_state = Transition(self.game, "Entering Memory Meadows, Catopia...")
             trans_state.enter_state()
             self.play_transition = False
 
@@ -532,13 +551,13 @@ class Level_7():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game) #TODO: Change this to take in the correct tmx map
+        self.all_sprites = All_sprites(game, "io_island") #TODO: Change this to take in the correct tmx map
         self.player_coords = (69, 69) #TODO: Change this to extract the player coordinates from the tmx map
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.bill_texts = (f"Basic arithmetic in C uses operators such  as +, -, *, /, % for addition, subtraction,multiplication, division and modulus       (remainder).",
-                           "These operators can be used with variables and constants.")
+        self.bill_texts = ("",
+                           "")
         self.bill_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.bill = Hint_NPC(game, self.all_sprites, "Bill Cats", "bill", self.bill_pos, self.bill_texts)
         
@@ -589,7 +608,7 @@ class Test_Level():
     def __init__(self, game):
         self.game = game
         self.play_transition = True
-        self.all_sprites = All_sprites(game)
+        self.all_sprites = All_sprites(game, "logic_links_2")
         self.player = Player(game, (900,500), self.all_sprites)
 
         # NPCs
@@ -599,13 +618,16 @@ class Test_Level():
         self.test_hint_NPC_correct = ("Yes it's true!", "They are quite good looking!")
         self.test_hint_NPC_wrong = ("Hmm you seem to be wrong...", "Walk away and come back to try again...")
         self.test_task_NPC = Task_NPC(game, self.all_sprites, "test task NPC", "alan", (800,350), self.test_task_NPC_texts, self.test_hint_NPC_correct, self.test_hint_NPC_wrong)
-        self.test_task_NPC.task_state = Student_Task(game, self.test_task_NPC.text_pointer)
+        self.test_task_NPC.task_state = Vim_Task(game, self.test_task_NPC.text_pointer)
 
         # Misc
+        """
         for i in range(20):
             random_x = randint(1000,2000)
             random_y = randint(1000,2000)
             Tree((random_x, random_y), self.all_sprites)
+        """
+        self.end_point = (2392, 818)
         self.show_chat = [1]        
         self.welcome_chatbox = Chatbox(game, "Developer No. 2",
                                ("Welcome to Catopia.","Use W, A, S and D to move around.","Press E while standing near NPCs to talk tothem."))

@@ -14,26 +14,26 @@ from game.elements import *
 
 # Start of NOTE: The following classes are for testing and interation purposes only,
 #                they will not be in the final game
-
+"""
 class Tree(pygame.sprite.Sprite):
-    """Class used to generate trees on the map in the milestone 1 TPOC"""
     def __init__(self, pos, group):
         super().__init__(group)
         self.image = pygame.image.load('game_assets/sprites/test_tree.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)      
 
+"""
 
 # End of NOTE
 
 class All_sprites(pygame.sprite.Group):
-    def __init__(self, game): # TODO: take in level map when working on levels
+    def __init__(self, game, map): # TODO: take in level map when working on levels
         super().__init__()
         self.half_game_w = game.GAME_W / 2
         self.half_game_h = game.GAME_H / 2
         self.offset = pygame.math.Vector2()
 
         # Load the TMX map
-        tmx_data = pytmx.load_pygame('game_assets/maps/logic_links.tmx')
+        tmx_data = pytmx.load_pygame(f'game_assets/maps/{map}.tmx')
         
         # Create a surface to render the map
         map_width = tmx_data.width * tmx_data.tilewidth
@@ -92,10 +92,12 @@ class All_sprites(pygame.sprite.Group):
 class Player(pygame.sprite.Sprite):
     def __init__(self, game, pos, group):
         super().__init__(group)
+        self.game = game
+        self.group = group
         self.image = pygame.image.load('game_assets/sprites/player.png').convert_alpha()
         self.rect = self.image.get_rect(center = pos)
         self.direction = pygame.math.Vector2()
-        self.speed = game.speed * 3
+        self.speed = game.speed * 1
         self.original_rect = self.rect.copy()  # Store the original position
     
     def update_player(self, actions):
@@ -120,7 +122,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center += self.direction * self.speed
         
         # Check collision with map objects using the game's sprite group
-        if self.game.all_sprites.check_collision(self.rect):
+        if self.group.check_collision(self.rect):
             self.rect = original_rect  # Revert to original position if collision detected
 
     

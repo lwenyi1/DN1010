@@ -315,201 +315,646 @@ class Student_Task(Task_State):
 """Level 2 tasks"""
 
 class Jamie_Task(Task_State):
-    """TODO"""
+    """Check which grade (from A to D) a score out of 100 will get"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L2_jamie_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L2_jamie_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L2_jamie_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L2_jamie_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 20)
+        self.game.draw_text(display, "returns the correct grade based on score", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 20)
+        self.game.draw_text(display, "A: 75-100, B: 50-74, C: 25-49, D: 0-24", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.2, 20)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Windows_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "for loop", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "while loop", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "switch statement", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "if/else statement", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to find glitches in updates", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Punk_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to check if two conditions to win a gang fight are fulfilled"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L2_punk_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L2_punk_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L2_punk_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L2_punk_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 20)
+        self.game.draw_text(display, "checks if both conditions to win are fulfilled", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 20)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 3 tasks"""
 
 class Bensen_Task(Task_State):
-    """TODO"""
+    """Choose the function that counts to 69"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L3_bensen_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L3_bensen_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L3_bensen_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L3_bensen_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "counts to 69", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Fisher_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches in fish"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L3_fisher_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L3_fisher_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L3_fisher_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L3_fisher_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Notepad_Task(Task_State):
-    """TODO"""
+    """Choose the correct method to print something indefinitely"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "for loop", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "while loop", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "recursion", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "if/else statement", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the method that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to print something indefinitely", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 4 tasks"""
 
 class Linux_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement that creates a pointer to the memories and dereferences it"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L4_linux_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L4_linux_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L4_linux_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L4_linux_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statements that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 20)
+        self.game.draw_text(display, "creates a pointer to the memories then", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 20)
+        self.game.draw_text(display, "dereferences it.", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.2, 20)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Tian_Task(Task_State):
-    """TODO"""
+    """Choose the correct output for the following code"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.7), 0.15, "Option A: 100", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.7), 0.2, "Option B: 200", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "Option C: 400", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "Option D: 300", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the correct amount", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "of water for the given code:", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+        self.game.draw_image(display, "L4_tian.png", (self.game.GAME_W/2, self.game.GAME_H * 0.4), 2)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Sane_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to print the location's address"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L4_sane_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L4_sane_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L4_sane_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L4_sane_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the code that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "prints the address of the int COM1", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 5 tasks"""
 
 class Json_Task(Task_State):
-    """TODO"""
+    """Choose the correct line to initialise an array to store deaths in 10 years"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "int death_list[10];", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "int death_list(10);", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "int *death_list[10];", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "int death_list<10>;", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Rascal_Task(Task_State):
-    """TODO"""
+    """Choose the correct line that accesses the first element of the list"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "numbers[1];", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "numbers[0];", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "numbers(1);", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "*numbers[1];", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the line that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "accesses the first element of the list", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Chad_Task(Task_State):
-    """TODO"""
+    """Choose the correct function to store the number of glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L5_chad_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L5_chad_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L5_chad_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L5_chad_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the program that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to store glitch counts", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 6 tasks"""
 
 class Mike_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L6_mike_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L6_mike_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L6_mike_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L6_mike_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the lines that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "allocate memory based on energy level", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Vim_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "malloc", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "calloc", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "realloc", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "free", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the function that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to reallocate memory", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Robert_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.15, "dealloc", 22, (255,255,255), (128,128,128))
+        self.option_b = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.2, "calloc", 22, (255,255,255), (128,128,128))
+        self.option_c = Button(game, "title_screen_button.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8),  0.2, "realloc", 22, (255,255,255), (128,128,128))
+        self.option_d = Button(game, "title_screen_button.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.2, "free", 22, (255,255,255), (128,128,128))
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to deallocate memory", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Level 7 tasks"""
 
 class Leet_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L1_macOS_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L1_macOS_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L1_macOS_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L1_macOS_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 class Dev_Task(Task_State):
-    """TODO"""
+    """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
+        self.option_a = Button_2(game, "L1_macOS_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L1_macOS_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L1_macOS_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L1_macOS_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
-        pass
+        if actions["click"]:
+            if self.option_a.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_b.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_c.is_clicked():
+                self.result[0] = 2
+                self.play_end_transition = True
+            if self.option_d.is_clicked():
+                self.result[0] = 1
+                self.play_end_transition = True
 
     def task_render(self, display):
-        pass
+        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+
+        self.option_a.print()
+        self.option_a.change_colour()
+        self.option_b.print()
+        self.option_b.change_colour()
+        self.option_c.print()
+        self.option_c.change_colour()
+        self.option_d.print()
+        self.option_d.change_colour()
 
 """Test level tasks:"""
 
