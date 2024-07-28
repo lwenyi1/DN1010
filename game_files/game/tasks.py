@@ -886,10 +886,10 @@ class Leet_Task(Task_State):
     """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
-        self.option_a = Button_2(game, "L1_macOS_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
-        self.option_b = Button_2(game, "L1_macOS_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
-        self.option_c = Button_2(game, "L1_macOS_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
-        self.option_d = Button_2(game, "L1_macOS_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
+        self.option_a = Button_2(game, "L7_leet_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L7_leet_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L7_leet_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L7_leet_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
         if actions["click"]:
@@ -897,18 +897,18 @@ class Leet_Task(Task_State):
                 self.result[0] = 2
                 self.play_end_transition = True
             if self.option_b.is_clicked():
-                self.result[0] = 2
+                self.result[0] = 1
                 self.play_end_transition = True
             if self.option_c.is_clicked():
                 self.result[0] = 2
                 self.play_end_transition = True
             if self.option_d.is_clicked():
-                self.result[0] = 1
+                self.result[0] = 2
                 self.play_end_transition = True
 
     def task_render(self, display):
-        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
-        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+        self.game.draw_text(display, "Select the option with the lines that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "creates a struct with leetcoder details", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
 
         self.option_a.print()
         self.option_a.change_colour()
@@ -923,10 +923,10 @@ class Dev_Task(Task_State):
     """Choose the correct statement to use to check for glitches"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
-        self.option_a = Button_2(game, "L1_macOS_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
-        self.option_b = Button_2(game, "L1_macOS_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
-        self.option_c = Button_2(game, "L1_macOS_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
-        self.option_d = Button_2(game, "L1_macOS_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
+        self.option_a = Button_2(game, "L7_dev_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
+        self.option_b = Button_2(game, "L7_dev_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
+        self.option_c = Button_2(game, "L7_dev_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
+        self.option_d = Button_2(game, "L7_dev_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
 
     def task_update(self, delta_time, actions):
         if actions["click"]:
@@ -937,15 +937,15 @@ class Dev_Task(Task_State):
                 self.result[0] = 2
                 self.play_end_transition = True
             if self.option_c.is_clicked():
-                self.result[0] = 2
+                self.result[0] = 1
                 self.play_end_transition = True
             if self.option_d.is_clicked():
-                self.result[0] = 1
+                self.result[0] = 2
                 self.play_end_transition = True
 
     def task_render(self, display):
-        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
-        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+        self.game.draw_text(display, "Select the option with the lines that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "will cause the program to crash", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
 
         self.option_a.print()
         self.option_a.change_colour()

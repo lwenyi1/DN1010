@@ -556,21 +556,22 @@ class Level_7():
         self.player = Player(game, self.player_coords, self.all_sprites)
 
         # NPCs
-        self.bill_texts = ("",
-                           "")
+        self.bill_texts = ("Structs in C are user-defined data types   that group data under a single name,      allowing for organisation of related      variables.",
+                           "They are defined using the struct keyword, and members are accessed using the dot     operator.",
+                           "Structs are useful for creating complex    data structures like records or objects.")
         self.bill_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.bill = Hint_NPC(game, self.all_sprites, "Bill Cats", "bill", self.bill_pos, self.bill_texts)
         
-        self.leet_texts = ("I love collecting apples!", "But I have no idea how to count how many   apples I have!")
-        self.leet_correct = ("Wow! Thanks for the help!", )
-        self.leet_wrong = ("Man! That can't be right...", )
+        self.leet_texts = ("I love leet code!", "I keep tabs on all the best leet coders!")
+        self.leet_correct = ("One day I'll be the best leetcoder!", )
+        self.leet_wrong = ("I'll never be the best leetcoder...", )
         self.leet_pos = (69, 69)
         self.leet = Task_NPC(game, self.all_sprites, "Avid Leetcoder", "leet", self.leet_pos, self.leet_texts, self.leet_correct, self.leet_wrong)
         self.leet.task_state = Leet_Task(game, self.leet.text_pointer)
 
-        self.dev_texts = ("My coffee mug keeps refilling itself!", )
-        self.dev_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.dev_wrong = ("Hmm I don't remember drinking that much...")
+        self.dev_texts = ("Have you ever heard of drunk programming?", "Been trying it out while making this world!", "Might explain all the glitches...")
+        self.dev_correct = ("The world should be fixed now!", )
+        self.dev_wrong = ("Back to the alcohol...")
         self.dev_pos = (69, 69)
         self.dev = Task_NPC(game, self.all_sprites, "Coffee Drinker", "dev", self.dev_pos, self.dev_texts, self.dev_correct, self.dev_wrong)
         self.dev.task_state = Dev_Task(game, self.dev.text_pointer)
