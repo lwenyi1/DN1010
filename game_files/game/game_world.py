@@ -21,7 +21,7 @@ class Game_World(State):
 
         # Level management:
         
-        self.level_num = 7 # Number which acts as the key to the level classes in the dictionary
+        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
@@ -34,10 +34,9 @@ class Game_World(State):
     def go_next_level(self):
         if (self.current_level.end_point[0] - self.radius <= self.current_level.player.rect.center[0] <= self.current_level.end_point[0] + self.radius and 
             self.current_level.end_point[1] - self.radius <= self.current_level.player.rect.center[1] <= self.current_level.end_point[1] + self.radius):  
-          #print("deez nuts")
-            if (self.level_num == 7):
+            if (self.level_num == 7): # Last level
                 print("game over")
-            elif (self.level_num == 8):
+            elif (self.level_num == 8): # Test level, does not go to any next level
                 print("go next")
             else:
                 self.level_num += 1
@@ -49,7 +48,7 @@ class Game_World(State):
             new_state.enter_state()
         self.current_level.update(delta_time, actions)
         print(self.current_level.player.rect.center)
-        #self.go_next_level()
+        self.go_next_level()
     
     def render(self, display):
         self.current_level.render(display)
@@ -296,9 +295,9 @@ class Level_3():
         # NPCs
         self.thomp_texts = (f"Loops can be used to repeatedly execute    lines of code while a condition is met.",
                            "While loops take in a condition and        repeatedly execute the block of code while the condition is true."
-                           "While loops can be used for indeterminate  interation."
+                           "While loops can be used for indeterminate  iteration."
                            "For loops specify initialisation, conditionand increment or decrement in one line."
-                           "For loops are more suitable for known      interation counts.")
+                           "For loops are more suitable for known      iteration counts.")
         self.thomp_pos = (69, 69) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.thomp = Hint_NPC(game, self.all_sprites, "Cat Thompson", "thomp", self.thomp_pos, self.thomp_texts)
         
