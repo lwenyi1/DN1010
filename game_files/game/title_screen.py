@@ -50,6 +50,10 @@ class Title(State):
                     self.index2 = 0
                     self.show_message = False
                     #TODO implement something to reset the level progress
+                    self.game.saved_level = 0
+                    self.game.json_data["saved_level"] = 0
+                    self.game.save_game()
+
                     new_state = Game_World(self.game)
                     new_state.enter_state()
                 if self.no_button.is_clicked():

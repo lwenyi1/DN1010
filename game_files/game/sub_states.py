@@ -7,6 +7,7 @@ Contains:
 """
 # NOTE I dont actually know what options to put yet. To think about it at some point.
 
+import json
 from game.state import State
 from game.elements import Button
 
@@ -55,7 +56,8 @@ class Pause_champ(State):
             self.exit_state()
         if actions['click']:
             if self.save_button.is_clicked():
-                #TODO implement saving mechanism
+                self.game.json_data["saved_level"] = self.game.saved_level
+                self.game.save_game()
                 print("saving...")
             if self.resume_button.is_clicked():
                 self.exit_state()

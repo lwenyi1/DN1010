@@ -5,6 +5,7 @@ Contains the game class.
 
 import pygame, os, time
 from pygame.locals import *
+import json
 import pytmx
 
 # Load game states, starting from title screen
@@ -89,6 +90,11 @@ class Game():
                         "action2" : False, "click": False, "esc": False }
         self.dt, self.prev_time = 0, 0 # self.dt is the time between cycles
         self.speed = 2 # change this to multiply the overall game speed
+        
+        with open("save.json", "r") as openfile:
+            self.json_data = json.load(openfile)
+        self.saved_level = self.json_data["saved_level"]
+        # NOTE: saved_level tracks the player's current level game wide (through all states)
         
         # Game management
         self.state_stack = []
@@ -191,6 +197,10 @@ class Game():
 
     # Some useful functions
 
+    def save_game(self):
+        with open("save.json", "w") as outfile:
+            json.dump(self.json_data, outfile)
+    
     def draw_text(self, surface, text, color, x, y, font_size):
         """
         Draws given text string to the screen, position define center of text.

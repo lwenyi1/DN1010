@@ -22,7 +22,7 @@ class Game_World(State):
         # Level management:
         
         self.game = game
-        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
+        self.level_num = game.saved_level # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
@@ -46,6 +46,7 @@ class Game_World(State):
             else:
                 self.level_num += 1
                 self.current_level = self.levels[f"{self.level_num}"]
+                self.game.saved_level = self.level_num # Update the current level game-wide
 
     def update(self, delta_time, actions): 
         if actions['esc']:
