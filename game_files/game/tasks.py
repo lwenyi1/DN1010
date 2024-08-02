@@ -491,7 +491,7 @@ class Fisher_Task(Task_State):
 
     def task_render(self, display):
         self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
-        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+        self.game.draw_text(display, "can be used to check for glitches in fish", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
 
         self.option_a.print()
         self.option_a.change_colour()
@@ -681,8 +681,8 @@ class Json_Task(Task_State):
                 self.play_end_transition = True
 
     def task_render(self, display):
-        self.game.draw_text(display, "Select the option with the statement that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
-        self.game.draw_text(display, "can be used to check for glitches", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
+        self.game.draw_text(display, "Select the option with the line that", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.1, 22)
+        self.game.draw_text(display, "can store deaths in 10 years", (255,255,255), self.game.GAME_W/2, self.game.GAME_H * 0.15, 22)
 
         self.option_a.print()
         self.option_a.change_colour()

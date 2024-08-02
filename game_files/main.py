@@ -88,7 +88,7 @@ class Game():
         self.actions = {"left": False, "right": False, "up" : False, "down" : False, "action1" : False, 
                         "action2" : False, "click": False, "esc": False }
         self.dt, self.prev_time = 0, 0 # self.dt is the time between cycles
-        self.speed = 1 # change this to multiply the overall game speed
+        self.speed = 2 # change this to multiply the overall game speed
         
         # Game management
         self.state_stack = []
