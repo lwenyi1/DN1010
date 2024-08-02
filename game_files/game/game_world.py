@@ -21,12 +21,14 @@ class Game_World(State):
 
         # Level management:
         
-        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
+        self.game = game
+        self.level_num = 7 # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
         self.current_level = self.levels[f"{self.level_num}"] # Change level_num into a string and use it as key for dict
         self.radius = 100 # radius for end point
+        self.exit_game = False
         
         # For testing purposes:
         #self.current_level = Test_Level(game)
@@ -36,6 +38,9 @@ class Game_World(State):
             self.current_level.end_point[1] - self.radius <= self.current_level.player.rect.center[1] <= self.current_level.end_point[1] + self.radius):  
             if (self.level_num == 7): # Last level
                 print("game over")
+                trans_state = Transition(self.game, "GAME COMPLETED")
+                trans_state.enter_state()
+                self.exit_game = True
             elif (self.level_num == 8): # Test level, does not go to any next level
                 print("go next")
             else:
@@ -48,6 +53,10 @@ class Game_World(State):
             new_state.enter_state()
         self.current_level.update(delta_time, actions)
         # print(self.current_level.player.rect.center)
+
+        if self.exit_game:
+            while len(self.game.state_stack) > 1:
+                self.game.state_stack.pop() # pop states until we reach back to the title screen
         self.go_next_level()
     
     def render(self, display):
