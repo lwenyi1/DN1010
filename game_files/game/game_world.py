@@ -22,7 +22,7 @@ class Game_World(State):
         # Level management:
         
         self.game = game
-        self.level_num = 7 # Number which acts as the key to the level classes in the dictionary
+        self.level_num = 0 # Number which acts as the key to the level classes in the dictionary
         self.levels = {"0": Level_0(game), "1": Level_1(game), "2": Level_2(game), "3": Level_3(game), 
                        "4": Level_4(game), "5": Level_5(game), "6": Level_6(game), "7": Level_7(game),
                        "8": Test_Level(game)} 
