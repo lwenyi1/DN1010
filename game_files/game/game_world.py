@@ -194,12 +194,12 @@ class Level_1():
                              "Not that I'm complaining but,",
                              "Wonder how much free coffee I've gotten?")
         self.coffee_correct = ("Glitches in this world can be pretty usefulif I do say so myself!", )
-        self.coffee_wrong = ("Hmm I don't remember drinking that much...")
+        self.coffee_wrong = ("Hmm I don't remember drinking that much...",)
         self.coffee_pos = (261, 1377)
         self.coffee = Task_NPC(game, self.all_sprites, "Coffee Drinker", "coffee", self.coffee_pos, self.coffee_texts, self.coffee_correct, self.coffee_wrong)
         self.coffee.task_state = Coffee_Task(game, self.coffee.text_pointer)
 
-        self.student_texts = ("I have no idea how to solve quadratic      equations.")
+        self.student_texts = ("I have no idea how to solve quadratic      equations.",)
         self.student_correct = ("That makes sense!", )
         self.student_wrong = ("I'm even more lost now...", )
         self.student_pos = (2067, 847)
@@ -257,7 +257,7 @@ class Level_2():
 
         self.windows_texts = ("I love Windows but,", "Every update introduces new glitches...", "What should I do to sieve them out?")
         self.windows_correct = ("Thanks! Now I don't have to change to Mac!", )
-        self.windows_wrong = ("Maybe Mac is better...")
+        self.windows_wrong = ("Maybe Mac is better...",)
         self.windows_pos = (1013, 1319)
         self.windows = Task_NPC(game, self.all_sprites, "Windows User", "windows", self.windows_pos, self.windows_texts, self.windows_correct, self.windows_wrong)
         self.windows.task_state = Windows_Task(game, self.windows.text_pointer)
@@ -322,7 +322,7 @@ class Level_3():
         self.fisher_texts = ("My fish these days seem to be glitching out", 
                              "I need a way to sort out which fish out of all the fish I caught are glitched.")
         self.fisher_correct = ("Great! No more selling glitched fish!", )
-        self.fisher_wrong = ("How am I supposed to sort them now...")
+        self.fisher_wrong = ("How am I supposed to sort them now...",)
         self.fisher_pos = (829, 719)
         self.fisher = Task_NPC(game, self.all_sprites, "Local Fisherman", "fisher", self.fisher_pos, self.fisher_texts, self.fisher_correct, self.fisher_wrong)
         self.fisher.task_state = Fisher_Task(game, self.fisher.text_pointer)
@@ -392,7 +392,7 @@ class Level_4():
         self.tian_texts = ("I found my grandma's pho recipe!", 
                            "But I'm not sure how much water to add...")
         self.tian_correct = ("So that's how much!", )
-        self.tian_wrong = ("That can't be right...")
+        self.tian_wrong = ("That can't be right...",)
         self.tian_pos = (2129, 1143)
         self.tian = Task_NPC(game, self.all_sprites, "Tian Duck", "tian", self.tian_pos, self.tian_texts, self.tian_correct, self.tian_wrong)
         self.tian.task_state = Tian_Task(game, self.tian.text_pointer)
@@ -457,7 +457,7 @@ class Level_5():
         self.rascal_texts = ("I've got a list of important numbers here,", 
                              "But I can't read")
         self.rascal_correct = ("Much thanks.", )
-        self.rascal_wrong = ("What! Useless...")
+        self.rascal_wrong = ("What! Useless...",)
         self.rascal_pos = (1289, 371)
         self.rascal = Task_NPC(game, self.all_sprites, "Local Rascal", "rascal", self.rascal_pos, self.rascal_texts, self.rascal_correct, self.rascal_wrong)
         self.rascal.task_state = Rascal_Task(game, self.rascal.text_pointer)
@@ -585,7 +585,7 @@ class Level_7():
 
         self.dev_texts = ("Have you ever heard of drunk programming?", "Been trying it out while making this world!", "Might explain all the glitches...")
         self.dev_correct = ("The world should be fixed now!", )
-        self.dev_wrong = ("Back to the alcohol...")
+        self.dev_wrong = ("Back to the alcohol...",)
         self.dev_pos = (1819, 635)
         self.dev = Task_NPC(game, self.all_sprites, "Coffee Drinker", "dev", self.dev_pos, self.dev_texts, self.dev_correct, self.dev_wrong)
         self.dev.task_state = Dev_Task(game, self.dev.text_pointer)

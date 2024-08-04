@@ -318,10 +318,10 @@ class Jamie_Task(Task_State):
     """Check which grade (from A to D) a score out of 100 will get"""
     def __init__(self, game, result):
         Task_State.__init__(self, game, result)
-        self.option_a = Button_2(game, "L2_jamie_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 1)
-        self.option_b = Button_2(game, "L2_jamie_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 1)
-        self.option_c = Button_2(game, "L2_jamie_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 1)
-        self.option_d = Button_2(game, "L2_jamie_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 1)
+        self.option_a = Button_2(game, "L2_jamie_a.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.4), 0.75)
+        self.option_b = Button_2(game, "L2_jamie_b.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.4), 0.75)
+        self.option_c = Button_2(game, "L2_jamie_c.png", (self.game.GAME_W*1/4, self.game.GAME_H*0.8), 0.75)
+        self.option_d = Button_2(game, "L2_jamie_d.png", (self.game.GAME_W*3/4, self.game.GAME_H*0.8), 0.75)
 
     def task_update(self, delta_time, actions):
         if actions["click"]:
