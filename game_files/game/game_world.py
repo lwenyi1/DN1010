@@ -305,9 +305,9 @@ class Level_3():
 
         # NPCs
         self.thomp_texts = (f"Loops can be used to repeatedly execute    lines of code while a condition is met.",
-                           "While loops take in a condition and        repeatedly execute the block of code while the condition is true."
-                           "While loops can be used for indeterminate  iteration."
-                           "For loops specify initialisation, conditionand increment or decrement in one line."
+                           "While loops take in a condition and        repeatedly execute the block of code while the condition is true.",
+                           "While loops can be used for indeterminate  iteration.",
+                           "For loops specify initialisation, conditionand increment or decrement in one line.",
                            "For loops are more suitable for known      iteration counts.")
         self.thomp_pos = (445, 695) #TODO: Change all the NPC coords to be extracted from the tmx map
         self.thomp = Hint_NPC(game, self.all_sprites, "Cat Thompson", "thomp", self.thomp_pos, self.thomp_texts)
@@ -570,7 +570,7 @@ class Level_7():
         self.end_point = (1781, 1261)
 
         # NPCs
-        self.bill_texts = ("Structs in C are user-defined data types   that group data under a single name,      allowing for organisation of related      variables.",
+        self.bill_texts = ("Structs in C are user-defined data types   that group data under a single name,       allowing for organisation of related       variables.",
                            "They are defined using the struct keyword, and members are accessed using the dot     operator.",
                            "Structs are useful for creating complex    data structures like records or objects.")
         self.bill_pos = (665, 659) #TODO: Change all the NPC coords to be extracted from the tmx map
@@ -587,7 +587,7 @@ class Level_7():
         self.dev_correct = ("The world should be fixed now!", )
         self.dev_wrong = ("Back to the alcohol...",)
         self.dev_pos = (1819, 635)
-        self.dev = Task_NPC(game, self.all_sprites, "Coffee Drinker", "dev", self.dev_pos, self.dev_texts, self.dev_correct, self.dev_wrong)
+        self.dev = Task_NPC(game, self.all_sprites, "Developer No.2", "dev", self.dev_pos, self.dev_texts, self.dev_correct, self.dev_wrong)
         self.dev.task_state = Dev_Task(game, self.dev.text_pointer)
 
     def update(self, delta_time, actions):

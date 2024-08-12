@@ -4,12 +4,12 @@ Contains:
  - parent task class
  - Level 0: Freshman_Task, Luke_Task, Desmon_Task
  - Level 1: MacOS_Task, Coffee_Task, Student_Task
- - Level 2:
- - Level 3:
- - level 4:
- - Level 5:
- - Level 6:
- - Level 7:
+ - Level 2: Jamie_Task, Windows_Task, Punk_Task
+ - Level 3: Bensen_Task, Fisher_Task, Notepad_Task
+ - level 4: Linux_Task, Tian_Task, Sane_Task
+ - Level 5: Json_Task, Rascal_Task, Chad_Task
+ - Level 6: Mike_task, Vim_Task, Robert_Task
+ - Level 7: Leet_Task, Dev_Task
  - test task class  
  
 Tasks are named based on the character they are tagged to
@@ -40,7 +40,14 @@ class Task_State(State):
 
     Methods:
     -------
-    
+    def task_update(self, delta_time, actions)
+        For child classes to use.
+    def update(self, delta_time, actions)
+        Contains logic for the transition screen and task completion updating. Calls task_update().
+    def task_render(self, display)
+        For child classes to use.
+    def render(self, display)
+        Renders the background for the task state. Calls task_render().
     """
     def __init__(self, game, result):
         State.__init__(self, game)
